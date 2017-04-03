@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-trash"></span> Delete Page
+        </h1>
+    </div>
+    {% endblock %}
+
+{% block body %}
+<div class="row">
+<form method="post">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th> Delete</th>
+            <th> ID</th>
+            <th> Name</th>
+            <th> Type</th>
+            <th> State</th>
+            <th> Size</th>
+            <th> Upadate Date</th>
+            <th> Owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for message in messages %}
+        <tr>
+            <td><input type="checkbox"  name="id" value="{{message.img_id}}"></td>
+            <td>{{ message.img_id }}</td>
+            <td>{{ message.img_name }}</td>
+            <td>{{ message.type }}</td>
+            <td>{{ message.state }}</td>
+            <td>{{ message.size }}</td>
+            <td>{{ message.time }}</td>
+            <td>{{ message.usr_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="container">
+    <div class="row">
+        <div class="com-sm-12">
+            <div class="row">
+                <div class="col-sm-offset-5 col-sm-2">
+                    <input type="button" value="Cancel" onclick="redirect()">
+                </div>
+                <div class="col-sm-2">
+                    <input type="submit" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</div>
+{% endblock %}
