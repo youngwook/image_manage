@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-picture col-sm-offset-5"></span> Wellcome!
+        </h1>
+    </div>
+    {% endblock %}
+    {% block navi %}
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""> Welcome, {% block user %} {% endblock %} </a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('create')}}"><span class="glyphicon glyphicon-book"></span> Create </a></li>
+
+                <li><a href="{{ url_for('delete')}}"><span class="glyphicon glyphicon-trash"></span> Delete </a></li>
+
+                <li><a href="{{ url_for('upload')}}"><span class="glyphicon glyphicon-floppy-open"></span> Upload </a></li>
+
+                <li><a href="{{ url_for('list')}}"><span class="glyphicon glyphicon-list"></span> List </a></li>
+
+                <li><a href="{{ url_for('list')}}"><span class="glyphicon glyphicon-refresh"></span> Refresh </a></li>
+
+                 <li><a href="{{ url_for('login')}}"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
+            </ul>
+        </div>
+    </nav>
+    {% endblock %}
+    {% block body %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th> ID</th>
+            <th> Name</th>
+            <th> Type</th>
+            <th> State</th>
+            <th> Size</th>
+            <th> Upadate Date</th>
+            <th> Owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for message in messages %}
+        <tr>
+            <td>{{ message.img_id }}</td>
+            <td>{{ message.img_name }}</td>
+            <td>{{ message.type }}</td>
+            <td>{{ message.state }}</td>
+            <td>{{ message.size }}</td>
+            <td>{{ message.time|timeformat }}</td>
+            <td>{{ message.owner }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    {% endblock %}

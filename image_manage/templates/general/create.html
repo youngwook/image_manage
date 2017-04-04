@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-book"></span> Create Page
+        </h1>
+    </div>
+    {% endblock %}
+
+{% block body %}
+<div class="row">
+{% if error %}<div>Error:{{ error }}</div>{% endif %}
+<script>
+
+  function validateForm() {
+
+    var x = document.forms["create"] ["type"].value;
+
+    if (x == null || x == "") {
+        alert("choose container platform");
+        return false;
+    }
+
+    var y1 = document.forms["create"] ["os-centos"].value;
+    var y2 = document.forms["create"] ["os-ubuntu"].value;
+    var y3 = document.forms["create"] ["os-fedora"].value;
+    if (y1 == "" && y2 == "" && y3 == "") {
+        alert("choose operation system");
+        return false;
+    }
+
+    var z1 = document.forms["create"] ["lib-openmpi"].value;
+    var z2 = document.forms["create"] ["lib-mpich"].value;
+    if (z1 =="" && z2 == "") {
+        alert("choose library");
+        return false;
+    }
+
+    var img_name = document.forms["create"] ["img_name"].value;
+    if (img_name == null || img_name == "") {
+        alert("insert image name");
+        return false;
+    }
+
+    var os = document.forms["create"] ["os"].value;
+    if (os == "centos") {
+        os = document.forms["create"] ["os-centos"].value;
+    }
+    if (os == "ubuntu") {
+        os = document.forms["create"] ["os-ubuntu"].value;
+    }
+    if (os == "fedora") {
+        os = document.forms["create"] ["os-fedora"].value
+    }
+
+    var lib = document.forms["create"] ["lib"].value;
+    if (lib == "openmpi") {
+        lib = document.forms["create"] ["lib-openmpi"].value;
+    }
+    if (lib == "mpich") {
+        lib = document.forms["create"] ["lib-mpich"].value;
+    }
+    /*
+    var display = document.getElementById("display");
+    display.visible = "true";
+    display.innerHTML = "<p> container platform is: " + x + "</p>"
+        + "<p> operation system is: " + os + "</p>"
+        + "<p> library is: " + lib + "</p>"
+        + "<p> image name is: " + img_name + "</p>";
+    */
+    var cf = confirm("container platform is: " + x + "\n"
+                + "operation system is: " + os + "\n"
+                + "library is: " + lib + "\n"
+                + "image name is: " + img_name );
+    if (cf) {
+        return true;
+    }
+    else {
+        return false;
+    }
+  }
+
+
+</script>
+<form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"> Choose Container Platform: </label>
+        <div class="col-sm-3">
+
+                <label class="control-label inline">
+                    <input type="radio"  name="type" value="docker" > docker
+                </label>
+
+        </div>
+        <div class="col-sm-3">
+                <label class="control-label inline">
+                    <input type="radio"  name="type" value="singularity" > singularity
+                </label>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"> Choose Operation System: </label>
+        <div class="col-sm-3">
+            <label class="inline control-label">
+                <input type="radio"  name="os" value="centos" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                centos
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="os-centos" disabled>
+                    <option> </option>
+                    <option>centos7</option>
+                    <option>centos6</option>
+                    <option>centos5</option>
+                </select>
+            </label>
+        </div>
+        <div class="col-sm-3" >
+            <label class="inline control-label">
+                <input type="radio"  name="os" value="ubuntu" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                ubuntu
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="os-ubuntu" disabled>
+                    <option> </option>
+                    <option>ubuntu14</option>
+                    <option>ubuntu12</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="col-sm-3" >
+            <label class="inline control-label">
+                <input type="radio"  name="os" value="fedora" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                fedora
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="os-fedora" disabled>
+                    <option> </option>
+                    <option>fedora</option>
+                </select>
+            </label>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"> Parellel Library: </label>
+        <div class="col-sm-3">
+            <label class="inline control-label">
+                <input type="radio"  name="lib" value="openmpi" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                openmpi
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="lib-openmpi" disabled>
+                    <option> </option>
+                    <option>openmpi2</option>
+                    <option>openmpi1</option>
+                </select>
+            </label>
+        </div>
+        <div class="col-sm-3" >
+            <label class="inline control-label">
+                <input type="radio"  name="lib" value="mpich" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                mpich
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="lib-mpich" disabled>
+                    <option> </option>
+                    <option>mpich3</option>
+                    <option>mpich2</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="img_name" class="col-sm-3 control-label"> Image Name: </label>
+        <div class=" col-sm-4">
+            <input type="text" class="form-control" id="img_name" name="img_name" placeholder="img name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="ssh" class="col-sm-3 control-label"> Other Application: </label>
+        <div class=" col-sm-4">
+            <input type="text" class="form-control" id="ssh" name="ssh" placeholder="ssh">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <input type="button" class="form-control" value="Cancel" onclick="redirect()">
+        </div>
+        <div class="col-sm-4">
+            <input type="submit" class="form-control" value="Submit">
+        </div>
+    </div>
+
+</form>
+</div>
+
+<script>
+
+  function clickRadio(value) {
+    if (value == "centos") {
+        document.forms["create"] ["os-centos"].disabled = false;
+        document.forms["create"] ["os-ubuntu"].disabled = true;
+        document.forms["create"] ["os-fedora"].disabled = true;
+    }
+    if (value == "ubuntu") {
+        document.forms["create"] ["os-centos"].disabled = true;
+        document.forms["create"] ["os-ubuntu"].disabled = false;
+        document.forms["create"] ["os-fedora"].disabled = true;
+    }
+    if (value == "fedora") {
+        document.forms["create"] ["os-centos"].disabled = true;
+        document.forms["create"] ["os-ubuntu"].disabled = true;
+        document.forms["create"] ["os-fedora"].disabled = false;
+    }
+    if (value == "openmpi") {
+        document.forms["create"] ["lib-openmpi"].disabled = false;
+        document.forms["create"] ["lib-mpich"].disabled = true;
+    }
+    if (value == "mpich") {
+        document.forms["create"] ["lib-openmpi"].disabled = true;
+        document.forms["create"] ["lib-mpich"].disabled = false;
+    }
+  }
+
+</script>
+    <div class="row">
+        <label class="col-sm-offset-3 col-sm-6" id="display" visible="false"></label>
+    </div>
+{% endblock %}
