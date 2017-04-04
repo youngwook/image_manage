@@ -1,0 +1,17 @@
+{% extends "base-v1.html" %}
+
+    {% block navi %}
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-user"></span> Create</a></li>
+
+                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+
+                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-floppy-open"></span> Update</a></li>
+
+                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-list"></span> List</a></li>
+
+                </ul>
+
+    {% endblock %}
