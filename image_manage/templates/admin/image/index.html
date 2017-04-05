@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+
+    {% block menu %}
+
+        <li><a href="{{ url_for('image.create')}}"><span class="glyphicon glyphicon-wrench"></span> Image Create</a></li>
+
+        <li><a href="{{ url_for('image.delete')}}"><span class="glyphicon glyphicon-trash"></span> Image Delete</a></li>
+
+        <li><a href="{{ url_for('image.list')}}"><span class="glyphicon glyphicon-list"></span> Image List</a></li>
+
+        <li><a href="{{ url_for('image.upload')}}"><span class="glyphicon glyphicon-floppy-open"></span> Image Upload </a></li>
+
+    {% endblock %}
+
+    {% block body %}
+    <div class="container">
+        <div class="row">
+            {% block inbody %}
+            {% endblock %}
+        </div>
+    </div>
+    {% endblock %}

@@ -9,11 +9,14 @@ class User(db.Model):
     usr_id = db.Column('usr_id', db.Integer, primary_key=True)
     usr_name = db.Column('usr_name', db.String(100))
     usr_pwd = db.Column('usr_pwd', db.String(100))
-    usr_grup = db.Column('usr_group', db.String(100))
+    usr_group = db.Column('usr_group', db.String(100))
 
-    def __init__(self, usr_name, pwd):
+    def __init__(self, usr_name, usr_pwd, usr_group):
         self.usr_name = usr_name
-        self.pwd = pwd
+        self.usr_pwd = usr_pwd
+        self.usr_group = usr_group
+
+
 
 
 class Img(db.Model):
@@ -33,6 +36,7 @@ class Img(db.Model):
         self.img_size = size
         self.img_time = time
         self.img_owner = owner
+
 
 class Platform(db.Model):
     __tablename__ = 'platform'

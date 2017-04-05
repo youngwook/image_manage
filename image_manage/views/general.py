@@ -8,5 +8,5 @@ def index():
     return render_template('general/index.html')
 
 @mod.route('/list')
-def userList():
+def list():
     return render_template('general/list.html')

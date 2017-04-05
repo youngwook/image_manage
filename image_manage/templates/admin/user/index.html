@@ -3,13 +3,11 @@
 
     {% block menu %}
 
-        <li><a href="{{ url_for('user.create')}}"><span class="glyphicon glyphicon-wrench"></span> Create</a></li>
+        <li><a href="{{ url_for('user.create')}}"><span class="glyphicon glyphicon-wrench"></span> User Create</a></li>
 
-        <li><a href="{{ url_for('user.delete')}}"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+        <li><a href="{{ url_for('user.delete')}}"><span class="glyphicon glyphicon-trash"></span> User Delete</a></li>
 
-        <li><a href="{{ url_for('user.update')}}"><span class="glyphicon glyphicon-floppy-open"></span> Update</a></li>
-
-        <li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-list"></span> List</a></li>
+        <li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-list"></span> User List</a></li>
 
     {% endblock %}
 

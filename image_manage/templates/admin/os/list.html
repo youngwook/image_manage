@@ -1,1 +1,32 @@
-{% extends "base-v1.html" %}
+{% extends "admin/os/index.html" %}
+
+    {% block header %}
+        <div class="page-header">
+            <h1>
+                <span class="glyphicon glyphicon-globe"></span> OS List
+            </h1>
+        </div>
+    {% endblock %}
+
+    {% block inbody %}
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> OS Type</th>
+                <th> OS Version</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message.os_type}}</td>
+                <td>{{ message.os_version }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

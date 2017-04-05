@@ -1,0 +1,62 @@
+{% extends "admin/library/index.html" %}
+
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-wrench"></span> Library Create
+        </h1>
+    </div>
+    {% endblock %}
+
+    {% block body %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('library.list') }}';
+      }
+    </script>
+
+
+
+    <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
+
+        <div class="form-group">
+            <label for="lib_type" class="col-sm-3 control-label"> Library Type: </label>
+            <div class=" col-sm-4">
+                <input type="text" class="form-control" id="lib_type" name="lib_type" placeholder="library type">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lib_version" class="col-sm-3 control-label"> Library Version: </label>
+            <div class=" col-sm-4">
+                <input type="text" class="form-control" id="lib_version" name="lib_version" placeholder="library version">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-2">
+                <input type="button" class="form-control" value="Cancel" onclick="redirect()">
+            </div>
+            <div class="col-sm-2">
+                <input type="submit" class="form-control" value="Create">
+            </div>
+        </div>
+
+    </form>
+    {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
+<script>
+
+  function validateForm() {
+    {% for i in item %}
+    var x = document.forms["create"] ["{{ i }}"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("miss {{ i }}");
+        return false;
+    }
+    {% endfor %}
+
+  }
+</script>
+
+{% endblock %}

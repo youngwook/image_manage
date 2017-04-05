@@ -10,10 +10,10 @@
 
     {% block menu %}
         <li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-user"></span> User</a></li>
-        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-picture"></span> Image</a></li>
-        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-leaf"></span> Platform</a></li>
-        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-folder-close"></span> Library</a></li>
-        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-globe"></span> OS</a></li>
-        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-hdd"></span> Application</a></li>
-        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a href="{{ url_for('image.list')}}"><span class="glyphicon glyphicon-picture"></span> Image</a></li>
+        <li><a href="{{ url_for('platform.list')}}"><span class="glyphicon glyphicon-leaf"></span> Platform</a></li>
+        <li><a href="{{ url_for('library.list')}}"><span class="glyphicon glyphicon-folder-close"></span> Library</a></li>
+        <li><a href="{{ url_for('os.list')}}"><span class="glyphicon glyphicon-globe"></span> OS</a></li>
+        <li><a href="{{ url_for('application.list')}}"><span class="glyphicon glyphicon-hdd"></span> Application</a></li>
+        <li><a href="{{ url_for('login.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     {% endblock %}

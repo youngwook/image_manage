@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+
+    {% block menu %}
+
+        <li><a href="{{ url_for('application.create')}}"><span class="glyphicon glyphicon-wrench"></span> Application Create</a></li>
+
+        <li><a href="{{ url_for('application.delete')}}"><span class="glyphicon glyphicon-trash"></span> Application Delete</a></li>
+
+        <li><a href="{{ url_for('application.list')}}"><span class="glyphicon glyphicon-list"></span> Application List</a></li>
+
+        <li><a href="{{ url_for('application.update')}}"><span class="glyphicon glyphicon-floppy-open"></span> Application Update </a></li>
+
+    {% endblock %}
+
+    {% block body %}
+    <div class="container">
+        <div class="row">
+            {% block inbody %}
+            {% endblock %}
+        </div>
+    </div>
+    {% endblock %}

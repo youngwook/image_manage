@@ -2,12 +2,13 @@
     {% block header %}
     <div class="page-header">
         <h1>
-            <span class="glyphicon glyphicon-book"></span> Image Create
+            <span class="glyphicon glyphicon-book"></span> Create Page
         </h1>
     </div>
     {% endblock %}
 
 {% block body %}
+<div class="row">
 {% if error %}<div>Error:{{ error }}</div>{% endif %}
 <script>
 
@@ -85,22 +86,23 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label"> Choose Container Platform: </label>
-        {% for p in pf %}
         <div class="col-sm-3">
 
                 <label class="control-label inline">
-                    <input type="radio"  name="platform" value="{{ p.pf_name }}" > {{ p.pf_name }}
+                    <input type="radio"  name="type" value="docker" > docker
                 </label>
 
         </div>
-        {% endfor %}
+        <div class="col-sm-3">
+                <label class="control-label inline">
+                    <input type="radio"  name="type" value="singularity" > singularity
+                </label>
 
+        </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-3 control-label"> Choose Operation System: </label>
-
-        {% for p in pf %}
         <div class="col-sm-3">
             <label class="inline control-label">
                 <input type="radio"  name="os" value="centos" onclick="clickRadio(value)">
@@ -117,7 +119,37 @@
                 </select>
             </label>
         </div>
-        {% endfor %}
+        <div class="col-sm-3" >
+            <label class="inline control-label">
+                <input type="radio"  name="os" value="ubuntu" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                ubuntu
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="os-ubuntu" disabled>
+                    <option> </option>
+                    <option>ubuntu14</option>
+                    <option>ubuntu12</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="col-sm-3" >
+            <label class="inline control-label">
+                <input type="radio"  name="os" value="fedora" onclick="clickRadio(value)">
+            </label>
+            <label class="inline control-label">
+                fedora
+            </label>
+            <label class="inline control-label">
+                <select class="form-control" name="os-fedora" disabled>
+                    <option> </option>
+                    <option>fedora</option>
+                </select>
+            </label>
+        </div>
+
     </div>
 
     <div class="form-group">
@@ -178,6 +210,7 @@
     </div>
 
 </form>
+</div>
 
 <script>
 

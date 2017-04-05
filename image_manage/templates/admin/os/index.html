@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+
+    {% block menu %}
+
+        <li><a href="{{ url_for('os.create')}}"><span class="glyphicon glyphicon-wrench"></span> OS Create</a></li>
+
+        <li><a href="{{ url_for('os.delete')}}"><span class="glyphicon glyphicon-trash"></span> OS Delete</a></li>
+
+        <li><a href="{{ url_for('os.list')}}"><span class="glyphicon glyphicon-list"></span> OS List</a></li>
+
+        <li><a href="{{ url_for('os.update')}}"><span class="glyphicon glyphicon-floppy-open"></span> OS Update </a></li>
+
+    {% endblock %}
+
+    {% block body %}
+    <div class="container">
+        <div class="row">
+            {% block inbody %}
+            {% endblock %}
+        </div>
+    </div>
+    {% endblock %}

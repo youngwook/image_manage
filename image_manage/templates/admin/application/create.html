@@ -1,0 +1,62 @@
+{% extends "admin/application/index.html" %}
+
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-wrench"></span> Application Create
+        </h1>
+    </div>
+    {% endblock %}
+
+    {% block body %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('application.list') }}';
+      }
+    </script>
+
+
+
+    <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
+
+        <div class="form-group">
+            <label for="app_name" class="col-sm-3 control-label"> Application Name: </label>
+            <div class=" col-sm-4">
+                <input type="text" class="form-control" id="app_name" name="app_name" placeholder="application name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="app_group" class="col-sm-3 control-label"> Application Group: </label>
+            <div class=" col-sm-4">
+                <input type="text" class="form-control" id="app_group" name="app_group" placeholder="application group">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-2">
+                <input type="button" class="form-control" value="Cancel" onclick="redirect()">
+            </div>
+            <div class="col-sm-2">
+                <input type="submit" class="form-control" value="Create">
+            </div>
+        </div>
+
+    </form>
+    {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
+<script>
+
+  function validateForm() {
+    {% for i in item %}
+    var x = document.forms["create"] ["{{ i }}"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("miss {{ i }}");
+        return false;
+    }
+    {% endfor %}
+
+  }
+</script>
+
+{% endblock %}

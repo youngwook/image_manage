@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" CONTENT="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-book"></span> Manaement
+        </h1>
+    </div>
+
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+
+            <div>
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            menu
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-user"></span> User</a></li>
+                            <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-picture"></span> Image</a></li>
+                            <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-leaf"></span> Platform</a></li>
+                            <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-folder-close"></span> Library</a></li>
+                            <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-globe"></span> OS</a></li>
+                            <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-hdd"></span> Application</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+                {% block navi %}
+                {% endblock %}
+
+
+
+            </div>
+        </div>
+    </nav>
+
+</body>
+
+</html>

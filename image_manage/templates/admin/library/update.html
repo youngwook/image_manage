@@ -1,0 +1,74 @@
+{% extends "admin/library/index.html" %}
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-floppy-open"></span> Library Update
+        </h1>
+    </div>
+    {% endblock %}
+
+    {% block inbody %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('library.list') }}';
+      }
+    </script>
+
+
+
+    <form method="post" name="create" onsubmit="return validateForm()">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Library Type</th>
+                    <th> Library Version</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td><input type="text"  name="{{ message.lib_type+(message.lib_id|string)}}" value="{{ message.lib_type}}"></td>
+                    <td><input type="text"  name="{{ (message.lib_id|string)+message.lib_version }}" value="{{ message.lib_version }}"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="container">
+            <div class="row">
+                <div class="com-sm-12">
+                    <div class="row">
+                        <div class="col-sm-offset-4 col-sm-2">
+                            <input type="button" value="Cancel" onclick="redirect()">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="submit" value="Update">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+<script>
+  function validateForm() {
+    {% for m in messages %}
+    var x = document.forms["create"] ["{{ m.lib_type+(m.lib_id|string) }}"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("{{ m.lib_type+m.lib_version }} can not empty");
+        return false;
+    }
+    var y = document.forms["create"] ["{{ (m.lib_id|string)+m.lib_version}}"].value;
+    if (!y || y.search(/[\s]/g)>-1) {
+        alert("{{ m.lib_version }} can not empty");
+        return false;
+    }
+    {% endfor %}
+  }
+</script>
+
+    {% if error %}<div class="col-sm-offset-5">{{ error }}</div>{% endif %}
+
+    {% endblock %}

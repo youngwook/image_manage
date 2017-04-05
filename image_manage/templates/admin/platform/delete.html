@@ -1,9 +1,9 @@
-{% extends "admin/user/index.html" %}
+{% extends "admin/platform/index.html" %}
     {% block header %}
 
     <div class="page-header">
         <h1>
-            <span class="glyphicon glyphicon-trash"></span> User Delete
+            <span class="glyphicon glyphicon-trash"></span> Platform Delete
         </h1>
     </div>
     {% endblock %}
@@ -12,7 +12,7 @@
 
     <script>
       function redirect(){
-        location.href='{{ url_for('user.list') }}';
+        location.href='{{ url_for('platform.list') }}';
       }
     </script>
 
@@ -23,17 +23,15 @@
             <thead>
                 <tr>
                     <th> Delete</th>
-                    <th> User Name</th>
-                    <th> Priority</th>
+                    <th> Platform</th>
                 </tr>
             </thead>
 
             <tbody>
             {% for message in messages %}
                 <tr>
-                    <td><input type="checkbox"  name="usr_id" value="{{message.usr_id}}"></td>
-                    <td>{{ message.usr_name}}</td>
-                    <td>{{ message.usr_group }}</td>
+                    <td><input type="checkbox"  name="pf_id" value="{{message.pf_id}}"></td>
+                    <td>{{ message.pf_name}}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -43,7 +41,7 @@
             <div class="row">
                 <div class="com-sm-12">
                     <div class="row">
-                        <div class="col-sm-offset-5 col-sm-2">
+                        <div class="col-sm-offset-4 col-sm-2">
                             <input type="button" value="Cancel" onclick="redirect()">
                         </div>
                         <div class="col-sm-2">

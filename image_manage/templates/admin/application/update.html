@@ -1,0 +1,74 @@
+{% extends "admin/application/index.html" %}
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-floppy-open"></span> Application Update
+        </h1>
+    </div>
+    {% endblock %}
+
+    {% block inbody %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('application.list') }}';
+      }
+    </script>
+
+
+
+    <form method="post" name="create" onsubmit="return validateForm()">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Application Name</th>
+                    <th> Application group</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td><input type="text"  name="{{ message.app_name+(message.app_id|string)}}" value="{{ message.app_name}}"></td>
+                    <td><input type="text"  name="{{ (message.app_id|string)+message.app_group }}" value="{{ message.app_group }}"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="container">
+            <div class="row">
+                <div class="com-sm-12">
+                    <div class="row">
+                        <div class="col-sm-offset-4 col-sm-2">
+                            <input type="button" value="Cancel" onclick="redirect()">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="submit" value="Update">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+<script>
+  function validateForm() {
+    {% for m in messages %}
+    var x = document.forms["create"] ["{{ m.app_name+(m.app_id|string) }}"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("{{ m.app_name+m.app_group }} can not empty");
+        return false;
+    }
+    var y = document.forms["create"] ["{{ (m.app_id|string)+m.app_group}}"].value;
+    if (!y || y.search(/[\s]/g)>-1) {
+        alert("{{ m.app_group }} can not empty");
+        return false;
+    }
+    {% endfor %}
+  }
+</script>
+
+    {% if error %}<div class="col-sm-offset-5">{{ error }}</div>{% endif %}
+
+    {% endblock %}

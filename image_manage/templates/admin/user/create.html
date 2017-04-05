@@ -3,7 +3,7 @@
     {% block header %}
     <div class="page-header">
         <h1>
-            <span class="glyphicon glyphicon-cog"></span> User Create
+            <span class="glyphicon glyphicon-wrench"></span> User Create
         </h1>
     </div>
     {% endblock %}
@@ -19,9 +19,9 @@
       }
     </script>
 
-    {% if error %}<div>Error:{{ error }}</div>{% endif %}
 
-    <form method="post" class="form-horizontal" role="form" name="create">
+
+    <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
 
         <div class="form-group">
             <label for="usr_name" class="col-sm-3 control-label"> UserName: </label>
@@ -71,4 +71,32 @@
         </div>
 
     </form>
+    {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
+<script>
+
+  function validateForm() {
+    {% for i in item %}
+    var x = document.forms["create"] ["{{ i }}"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("miss {{ i }}");
+        return false;
+    }
+    {% endfor %}
+
+    var y1 = document.forms["create"] ["usr_pwd"].value;
+    var y2 = document.forms["create"] ["pwd"].value;
+    if (!y2 || y2.search(/[\s]/g)>-1) {
+        alert("enter password again ");
+        return false;
+    }
+    if (y1 != y2 ){
+        alert("password is different");
+        return false;
+    }
+
+  }
+
+
+</script>
+
 {% endblock %}

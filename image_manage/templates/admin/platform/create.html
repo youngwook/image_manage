@@ -1,0 +1,55 @@
+{% extends "admin/platform/index.html" %}
+
+    {% block header %}
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-wrench"></span> Platform Create
+        </h1>
+    </div>
+    {% endblock %}
+
+    {% block body %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('platform.list') }}';
+      }
+    </script>
+
+
+
+    <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
+
+        <div class="form-group">
+            <label for="pf_name" class="col-sm-3 control-label"> Platform: </label>
+            <div class=" col-sm-4">
+                <input type="text" class="form-control" id="pf_name" name="pf_name" placeholder="platform">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-2">
+                <input type="button" class="form-control" value="Cancel" onclick="redirect()">
+            </div>
+            <div class="col-sm-2">
+                <input type="submit" class="form-control" value="Create">
+            </div>
+        </div>
+
+    </form>
+    {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
+<script>
+
+  function validateForm() {
+    var x = document.forms["create"] ["pf_name"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("enter Platform ");
+        return false;
+    }
+  }
+
+
+</script>
+
+{% endblock %}
