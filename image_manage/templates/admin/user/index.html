@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+
+    {% block menu %}
+
+        <li><a href="{{ url_for('user.create')}}"><span class="glyphicon glyphicon-wrench"></span> Create</a></li>
+
+        <li><a href="{{ url_for('user.delete')}}"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+
+        <li><a href="{{ url_for('user.update')}}"><span class="glyphicon glyphicon-floppy-open"></span> Update</a></li>
+
+        <li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-list"></span> List</a></li>
+
+    {% endblock %}
+
+    {% block body %}
+    <div class="container">
+        <div class="row">
+            {% block inbody %}
+            {% endblock %}
+        </div>
+    </div>
+    {% endblock %}

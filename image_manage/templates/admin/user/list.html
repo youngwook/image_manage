@@ -1,17 +1,32 @@
-{% extends "base-v1.html" %}
+{% extends "admin/user/index.html" %}
 
-    {% block navi %}
+    {% block header %}
+        <div class="page-header">
+            <h1>
+                <span class="glyphicon glyphicon-user"></span> User List
+            </h1>
+        </div>
+    {% endblock %}
 
-                <ul class="nav navbar-nav navbar-right">
+    {% block inbody %}
 
-                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-user"></span> Create</a></li>
 
-                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> User Name</th>
+                <th> Priority</th>
+            </tr>
+        </thead>
 
-                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-floppy-open"></span> Update</a></li>
-
-                    <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-list"></span> List</a></li>
-
-                </ul>
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message.usr_name}}</td>
+                <td>{{ message.usr_group }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     {% endblock %}

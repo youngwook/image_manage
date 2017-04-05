@@ -1,0 +1,59 @@
+{% extends "admin/user/index.html" %}
+    {% block header %}
+
+    <div class="page-header">
+        <h1>
+            <span class="glyphicon glyphicon-trash"></span> User Delete
+        </h1>
+    </div>
+    {% endblock %}
+
+    {% block inbody %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('user.list') }}';
+      }
+    </script>
+
+
+
+    <form method="post">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Delete</th>
+                    <th> User Name</th>
+                    <th> Priority</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td><input type="checkbox"  name="id" value="{{message.usr_id}}"></td>
+                    <td>{{ message.usr_name}}</td>
+                    <td>{{ message.usr_group }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="container">
+            <div class="row">
+                <div class="com-sm-12">
+                    <div class="row">
+                        <div class="col-sm-offset-5 col-sm-2">
+                            <input type="button" value="Cancel" onclick="redirect()">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="submit" value="Delete">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    {% endblock %}

@@ -82,7 +82,7 @@ def upload():
 
     messages = db.session.query(Img).join(User,  Img.owner==User.usr_id)\
         .add_columns(Img.img_id, Img.img_name, Img.type, Img.state, Img.size, Img.time, User.usr_name, User.usr_id).all()
-    return render_template('upload.html', messages = messages)
+    return render_template('update.html', messages = messages)
 
 @app.route('/login', methods=['GET','POST'])
 def login():

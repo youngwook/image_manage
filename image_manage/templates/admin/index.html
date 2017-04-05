@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+    {% block header %}
+        <div class="page-header">
+            <h1>
+                <span class="glyphicon glyphicon-cog"></span> Admin Page!
+            </h1>
+        </div>
+    {% endblock %}
+
+    {% block menu %}
+        <li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-user"></span> User</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-picture"></span> Image</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-leaf"></span> Platform</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-folder-close"></span> Library</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-globe"></span> OS</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-hdd"></span> Application</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    {% endblock %}
