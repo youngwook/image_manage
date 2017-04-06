@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "general/index.html" %}
     {% block header %}
     <div class="page-header">
         <h1>
@@ -7,8 +7,14 @@
     </div>
     {% endblock %}
 
-{% block body %}
-<div class="row">
+{% block inbody %}
+
+    <script>
+      function redirect(){
+        location.href='{{ url_for('general.list') }}';
+      }
+    </script>
+
 <form method="post">
 <table class="table table-bordered">
     <thead>
@@ -26,13 +32,13 @@
     <tbody>
         {% for message in messages %}
         <tr>
-            <td><input type="checkbox"  name="id" value="{{message.img_id}}"></td>
+            <td><input type="checkbox"  name="img_id" value="{{message.img_id}}"></td>
             <td>{{ message.img_id }}</td>
             <td>{{ message.img_name }}</td>
-            <td>{{ message.type }}</td>
-            <td>{{ message.state }}</td>
-            <td>{{ message.size }}</td>
-            <td>{{ message.time }}</td>
+            <td>{{ message.img_type }}</td>
+            <td>{{ message.img_state }}</td>
+            <td>{{ message.img_size }}</td>
+            <td>{{ message.img_time }}</td>
             <td>{{ message.usr_name }}</td>
         </tr>
         {% endfor %}
@@ -53,5 +59,4 @@
     </div>
 </div>
 </form>
-</div>
 {% endblock %}

@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
+
     {% block header %}
     <div class="page-header">
         <h1>
@@ -6,29 +7,28 @@
         </h1>
     </div>
     {% endblock %}
-    {% block navi %}
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href=""> Welcome, {% block user %} {% endblock %} </a>
-            </div>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url_for('create')}}"><span class="glyphicon glyphicon-book"></span> Create </a></li>
+    {% block menu %}
 
-                <li><a href="{{ url_for('delete')}}"><span class="glyphicon glyphicon-trash"></span> Delete </a></li>
+                <li><a href="{{ url_for('general.create')}}"><span class="glyphicon glyphicon-book"></span> Create </a></li>
 
-                <li><a href="{{ url_for('upload')}}"><span class="glyphicon glyphicon-floppy-open"></span> Upload </a></li>
+                <li><a href="{{ url_for('general.delete')}}"><span class="glyphicon glyphicon-trash"></span> Delete </a></li>
 
-                <li><a href="{{ url_for('list')}}"><span class="glyphicon glyphicon-list"></span> List </a></li>
+                <li><a href="{{ url_for('general.upload')}}"><span class="glyphicon glyphicon-floppy-open"></span> Upload </a></li>
 
-                <li><a href="{{ url_for('list')}}"><span class="glyphicon glyphicon-refresh"></span> Refresh </a></li>
+                <li><a href="{{ url_for('general.list')}}"><span class="glyphicon glyphicon-list"></span> List </a></li>
+
+                <li><a href="{{ url_for('general.list')}}"><span class="glyphicon glyphicon-refresh"></span> Refresh </a></li>
 
                  <li><a href="{{ url_for('login.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
-            </ul>
-        </div>
-    </nav>
+
     {% endblock %}
+
     {% block body %}
-        {% if message %} {{message}} {% endif %}
+    <div class="container">
+        <div class="row">
+            {% block inbody %}
+            {% endblock %}
+        </div>
+    </div>
     {% endblock %}

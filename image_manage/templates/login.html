@@ -26,16 +26,16 @@
   function change() {
     var x = document.forms["login"] ["node_ip"].value;
     var y = document.forms["login"] ["usr_name"].value;
-    var z = document.forms["login"] ["pwd"].value;
-    if (x == null || x =="") {
+    var z = document.forms["login"] ["usr_pwd"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
         alert("insert node ip")
         return false;
     }
-    else if (y == null || y =="") {
+    else if (!y || y.search(/[\s]/g)>-1) {
         alert("insert user name")
         return false;
     }
-    else if (z == null || z =="") {
+    else if (!z || z.search(/[\s]/g)>-1) {
         alert("insert pwd")
         return false;
     }
@@ -71,13 +71,13 @@
     <div class="form-group">
         <label for="usr_name" class="col-sm-2 control-label"> username: </label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="usr_name" name="usr_name" placeholder="please enter id">
+            <input type="text" class="form-control" id="usr_name" name="usr_name" placeholder="please enter user name">
         </div>
     </div>
     <div class="form-group">
-        <label for="pwd" class="col-sm-2 control-label"> password: </label>
+        <label for="usr_pwd" class="col-sm-2 control-label"> password: </label>
         <div class="col-sm-4">
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="please enter password">
+            <input type="password" class="form-control" id="usr_pwd" name="usr_pwd" placeholder="please enter password">
         </div>
         <div class="col-sm-1">
             <input type="button" class="form-control" id="ok" name="ok" value="ok" onclick="change()">
@@ -94,6 +94,6 @@
     </div>
 
 </form>
-{% if error %} {{ error }} {% endif %}
+    {% if error %}<div class="col-sm-offset-5">{{ error }}</div>{% endif %}
 
 {% endblock %}
