@@ -1,12 +1,8 @@
 {% extends "admin/image/index.html" %}
     {% block header %}
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-picture"></span> Image List
-        </h1>
-    </div>
+        <li><a href="{{ url_for('image.list')}}"><span class="glyphicon glyphicon-list"></span> Image List</a></li>
     {% endblock %}
-{% block inbody %}
+{% block body %}
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -24,14 +20,13 @@
         <tr>
             <td>{{ message.img_id }}</td>
             <td>{{ message.img_name }}</td>
-            <td>{{ message.type }}</td>
-            <td>{{ message.state }}</td>
-            <td>{{ message.size }}</td>
-            <td>{{ message.time }}</td>
+            <td>{{ message.img_type }}</td>
+            <td>{{ message.img_state }}</td>
+            <td>{{ message.img_size }}</td>
+            <td>{{ message.img_time }}</td>
             <td>{{ message.usr_name }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-</div>
 {% endblock %}

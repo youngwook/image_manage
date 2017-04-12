@@ -1,13 +1,9 @@
 {% extends "admin/os/index.html" %}
     {% block header %}
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-floppy-open"></span> OS Update
-        </h1>
-    </div>
+        <li><a href="{{ url_for('os.update')}}"><span class="glyphicon glyphicon-floppy-open"></span> OS Update </a></li>
     {% endblock %}
 
-    {% block inbody %}
+    {% block body %}
 
     <script>
       function redirect(){
@@ -36,20 +32,15 @@
             </tbody>
         </table>
 
-        <div class="container">
-            <div class="row">
-                <div class="com-sm-12">
-                    <div class="row">
-                        <div class="col-sm-offset-4 col-sm-2">
-                            <input type="button" value="Cancel" onclick="redirect()">
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="submit" value="Update">
-                        </div>
-                    </div>
-                </div>
+        <div class="row clearfix">
+            <div class="col-sm-offset-4 col-sm-2 column">
+                <input type="button" value="Cancel" onclick="redirect()">
+            </div>
+            <div class="col-sm-2 column">
+                <input type="submit" value="Update">
             </div>
         </div>
+
     </form>
 
 <script>

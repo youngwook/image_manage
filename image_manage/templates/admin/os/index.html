@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout_admin.html" %}
 
 
     {% block menu %}
@@ -11,13 +11,4 @@
 
         <li><a href="{{ url_for('os.update')}}"><span class="glyphicon glyphicon-floppy-open"></span> OS Update </a></li>
 
-    {% endblock %}
-
-    {% block body %}
-    <div class="container">
-        <div class="row">
-            {% block inbody %}
-            {% endblock %}
-        </div>
-    </div>
     {% endblock %}

@@ -1,14 +1,10 @@
 {% extends "admin/os/index.html" %}
 
     {% block header %}
-        <div class="page-header">
-            <h1>
-                <span class="glyphicon glyphicon-globe"></span> OS List
-            </h1>
-        </div>
+        <li><a href="{{ url_for('os.list')}}"><span class="glyphicon glyphicon-list"></span> OS List</a></li>
     {% endblock %}
 
-    {% block inbody %}
+    {% block body %}
 
 
     <table class="table table-bordered">

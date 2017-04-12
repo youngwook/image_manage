@@ -1,14 +1,10 @@
 {% extends "admin/user/index.html" %}
     {% block header %}
 
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-trash"></span> User Delete
-        </h1>
-    </div>
+        <li><a href="{{ url_for('user.delete')}}"><span class="glyphicon glyphicon-trash"></span> User Delete</a></li>
     {% endblock %}
 
-    {% block inbody %}
+    {% block body %}
 
     <script>
       function redirect(){
@@ -39,20 +35,15 @@
             </tbody>
         </table>
 
-        <div class="container">
-            <div class="row">
-                <div class="com-sm-12">
-                    <div class="row">
-                        <div class="col-sm-offset-5 col-sm-2">
-                            <input type="button" value="Cancel" onclick="redirect()">
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="submit" value="Delete">
-                        </div>
-                    </div>
-                </div>
+        <div class="row clearfix">
+            <div class="col-sm-offset-5 col-sm-2 column">
+                <input type="button" value="Cancel" onclick="redirect()">
+            </div>
+            <div class="col-sm-2 column">
+                <input type="submit" value="Delete">
             </div>
         </div>
+
     </form>
     {% if error %}<div class="col-sm-offset-5">{{ error }}</div>{% endif %}
     {% endblock %}

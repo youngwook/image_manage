@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+				<ul class="nav navbar-nav navbar-left">
+					{% block header %}
+
+					{% endblock %}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+        			<li><a href="{{ url_for('login.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				</ul>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+			<ul class="nav nav-pills nav-stacked">
+        		<li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-user"></span> User</a></li>
+       			<li><a href="{{ url_for('image.list')}}"><span class="glyphicon glyphicon-picture"></span> Image</a></li>
+        		<li><a href="{{ url_for('platform.list')}}"><span class="glyphicon glyphicon-leaf"></span> Platform</a></li>
+        		<li><a href="{{ url_for('library.list')}}"><span class="glyphicon glyphicon-folder-close"></span> Library</a></li>
+        		<li><a href="{{ url_for('os.list')}}"><span class="glyphicon glyphicon-globe"></span> OS</a></li>
+        		<li><a href="{{ url_for('application.list')}}"><span class="glyphicon glyphicon-hdd"></span> Application</a></li>
+			</ul>
+		</div>
+		<div class="col-md-10 column">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<ul class="nav navbar-nav navbar-right">
+                		{% block menu %} {% endblock %}
+					</ul>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+			    	{% block body %} {% endblock %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>

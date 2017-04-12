@@ -64,4 +64,4 @@ def update():
                 app.app_group = request.form[str(i.app_id)+i.app_group]
                 db.session.commit()
         return redirect(url_for('application.list'))
-    return render_template('admin/application/update.html')
+    return render_template('admin/application/update.html', messages=messages)

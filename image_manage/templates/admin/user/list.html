@@ -1,14 +1,10 @@
 {% extends "admin/user/index.html" %}
 
     {% block header %}
-        <div class="page-header">
-            <h1>
-                <span class="glyphicon glyphicon-user"></span> User List
-            </h1>
-        </div>
+        <li><a href="{{ url_for('user.list')}}"><span class="glyphicon glyphicon-list"></span> User List</a></li>
     {% endblock %}
 
-    {% block inbody %}
+    {% block body %}
 
 
     <table class="table table-bordered">

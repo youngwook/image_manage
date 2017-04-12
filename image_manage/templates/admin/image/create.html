@@ -1,10 +1,6 @@
-{% extends "base.html" %}
+{% extends "admin/image/index.html" %}
     {% block header %}
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-book"></span> Image Create
-        </h1>
-    </div>
+        <li><a href="{{ url_for('image.create')}}"><span class="glyphicon glyphicon-wrench"></span> Image Create</a></li>
     {% endblock %}
 
 {% block body %}
@@ -100,7 +96,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label"> Choose Operation System: </label>
 
-        {% for p in pf %}
+        {% for o in os %}
         <div class="col-sm-3">
             <label class="inline control-label">
                 <input type="radio"  name="os" value="centos" onclick="clickRadio(value)">
@@ -178,6 +174,7 @@
     </div>
 
 </form>
+
 
 <script>
 

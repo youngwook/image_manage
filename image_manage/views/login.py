@@ -17,4 +17,4 @@ def login():
 
 @mod.route('/logout')
 def logout():
-    return redirect(url_for('index'))
+    return redirect(url_for('login.index'))

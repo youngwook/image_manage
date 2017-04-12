@@ -1,11 +1,7 @@
 {% extends "admin/platform/index.html" %}
 
     {% block header %}
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-wrench"></span> Platform Create
-        </h1>
-    </div>
+        <li><a href="{{ url_for('platform.create')}}"><span class="glyphicon glyphicon-wrench"></span> Platform Create</a></li>
     {% endblock %}
 
     {% block body %}
@@ -17,7 +13,8 @@
     </script>
 
 
-
+<div class="row clearfix">
+    <div class="col-sm-offset-4">
     <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
 
         <div class="form-group">
@@ -38,6 +35,8 @@
         </div>
 
     </form>
+    </div>
+</div>
     {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
 <script>
 

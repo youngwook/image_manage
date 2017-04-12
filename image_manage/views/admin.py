@@ -6,4 +6,4 @@ mod = Blueprint('admin', __name__, url_prefix='/admin')
 
 @mod.route('/')
 def index():
-    return render_template('admin/index.html')
+    return render_template('admin/index_admin.html')

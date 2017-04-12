@@ -1,14 +1,10 @@
 {% extends "admin/library/index.html" %}
 
     {% block header %}
-        <div class="page-header">
-            <h1>
-                <span class="glyphicon glyphicon-folder-close"></span> Library List
-            </h1>
-        </div>
+        <li><a href="{{ url_for('library.list')}}"><span class="glyphicon glyphicon-list"></span> Library List</a></li>
     {% endblock %}
 
-    {% block inbody %}
+    {% block body %}
 
 
     <table class="table table-bordered">

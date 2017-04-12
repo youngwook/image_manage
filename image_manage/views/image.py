@@ -6,7 +6,7 @@ item = ['img_id', 'img_name', 'img_type', 'img_state', 'img_size', 'img_time', '
 @mod.route('/')
 @mod.route('/list')
 def list():
-    messages = db.session.query(Img).join(User, Img.owner == User.usr_id) \
+    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
         .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
                      User.usr_id).all()
     return render_template('admin/image/list.html', messages=messages)
@@ -21,7 +21,7 @@ def create():
 
 @mod.route('/delete')
 def delete():
-    messages = db.session.query(Img).join(User, Img.owner == User.usr_id) \
+    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
         .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
                      User.usr_id).all()
     if request.method == 'POST':
@@ -35,7 +35,7 @@ def delete():
 
 @mod.route('/uplaod')
 def upload():
-    messages = db.session.query(Img).join(User, Img.owner == User.usr_id) \
+    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
         .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
                      User.usr_id).all()
     if request.method == 'POST':
@@ -44,4 +44,4 @@ def upload():
             img = db.session.query(Img).filter_by(img_id=i).first()
 
         return render_template('admin/image/list.html')
-    return render_template('admin/image/update.html', messages=messages)
+    return render_template('admin/image/upload.html', messages=messages)
