@@ -16,6 +16,9 @@ class User(db.Model):
         self.usr_pwd = usr_pwd
         self.usr_group = usr_group
 
+    def as_dict(self):
+        return {x.name: getattr(self, x.name) for x in self.__table__.columns}
+
 
 
 
@@ -82,5 +85,5 @@ class Application(db.Model):
 
 def init_db():
     db.create_all()
-    print 'db success!'
+    print 'databases success!'
 

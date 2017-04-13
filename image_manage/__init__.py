@@ -11,7 +11,7 @@ from image_manage.database import db, User
 
 @app.before_request
 def before_request():
-    '''make sure we are connected to the db each request and look up the current user so that we know he is there'''
+    '''make sure we are connected to the databases each request and look up the current user so that we know he is there'''
 
     g.user = None
     if 'usr_id' in session:
@@ -19,7 +19,7 @@ def before_request():
 
 @app.teardown_request
 def teardown_request(exception):
-    '''closes the db at each of end of request'''
+    '''closes the databases at each of end of request'''
     db.session.remove()
 
 from image_manage.views import login
