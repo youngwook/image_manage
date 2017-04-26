@@ -1,8 +1,5 @@
-import time
-from sqlite3 import dbapi2 as sqlite3
 from datetime import datetime, timedelta
 from flask import Flask,render_template, request, session, url_for, redirect, g
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('config')

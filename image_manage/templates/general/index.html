@@ -1,11 +1,9 @@
-{% extends "layout.html" %}
+{% extends "layout_general.html" %}
 
     {% block header %}
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-picture col-sm-offset-5"></span> Wellcome!
-        </h1>
-    </div>
+
+        <span class="glyphicon glyphicon-picture col-sm-offset-5"></span> Wellcome!
+
     {% endblock %}
 
     {% block menu %}
@@ -22,13 +20,4 @@
 
                  <li><a href="{{ url_for('login.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
 
-    {% endblock %}
-
-    {% block body %}
-    <div class="container">
-        <div class="row">
-            {% block inbody %}
-            {% endblock %}
-        </div>
-    </div>
     {% endblock %}

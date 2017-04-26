@@ -1,22 +1,30 @@
 <!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+
 </head>
 <body>
 
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
+			<div class="page-header">
+            	<h1>
+					{% block head %} {% endblock %}
+            	</h1>
+        	</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
 				<ul class="nav navbar-nav navbar-left">
-					{% block header %}
-
-					{% endblock %}
+					{% block header %} {% endblock %}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
         			<li><a href="{{ url_for('login.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -53,3 +61,4 @@
 
 
 </body>
+</html>
