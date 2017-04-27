@@ -1,6 +1,10 @@
 {% extends "layout_admin.html" %}
 
+    {% block head %}
+        <span class="glyphicon glyphicon-cog"> </span> Admin Page
+    {% endblock %}
+
     {% block header %}
-        <li><a href="{{ url_for('login.index')}}"><span class="glyphicon glyphicon-cog"> </span> Admin Page</a></li>
+        <li><a href="{{ url_for('admin.index')}}"><span class="glyphicon glyphicon-cog"> </span> Admin Page</a></li>
     {% endblock %}
 
