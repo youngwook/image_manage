@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from image_manage.databases.database import db
 
 
@@ -84,11 +83,11 @@ class Img(db.Model):
     LibraryID = db.Column('LibraryID', db.Integer)
     AppID = db.Column('AppID', db.Integer)
     Description = db.Column('Description', db.String(100))
-    Public = db.Column('Public', db.Boolean, default = False, nuallable = False)
+    Public = db.Column('Public', db.Boolean, default = False, nullable = False)
     Status = db.Column('Status', db.String(20))
     Size = db.Column('Size', db.String(20))
     UpdateTime = db.Column('UpdateTime', db.DateTime)
-    Liked = db.Column('Liked', db.Boolean, default = False, nuallable = True)
+    Liked = db.Column('Liked', db.Boolean, default = False, nullable = True)
 
     def __init__(self, ID, UUID, UserID, ImageName, PlatformID, OSID, LibraryID, AppID, Description, Public, Status, Size, UpdateTime, Liked):
         self.ID = ID
