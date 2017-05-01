@@ -87,10 +87,9 @@ class Img(db.Model):
     Status = db.Column('Status', db.String(20))
     Size = db.Column('Size', db.String(20))
     UpdateTime = db.Column('UpdateTime', db.DateTime)
-    Liked = db.Column('Liked', db.Boolean, default = False, nullable = True)
+    Liked = db.Column('Liked', db.Boolean, default = True, nullable = False)
 
-    def __init__(self, ID, UUID, UserID, ImageName, PlatformID, OSID, LibraryID, AppID, Description, Public, Status, Size, UpdateTime, Liked):
-        self.ID = ID
+    def __init__(self, UUID, UserID, ImageName, PlatformID, OSID, LibraryID, AppID, Description, Public, Status, Size, UpdateTime, Liked):
         self.UUID = UUID
         self.UserID = UserID
         self.ImageName = ImageName

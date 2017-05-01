@@ -10,33 +10,35 @@
     <title>Title</title>
 </head>
 <body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+            	<h1>
+					{% block header %} {% endblock %}
+            	</h1>
+        	</div>
+		</div>
+	</div>
 
-    {% block header %}
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="{{ url_for('login.index')}}"><span class="glyphicon glyphicon-picture"> </span>Welcome </a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% block menu %} {% endblock %}
+				</ul>
+		</div>
+	</div>
 
-    {% endblock %}
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			{% block body %} {% endblock %}
+		</div>
+	</div>
+</div>
 
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href=""> Welcome {% block user %}  {% endblock %} </a>
-            </div>
-
-            <ul class="nav navbar-nav navbar-right">
-
-                {% block menu %}
-
-
-                {% endblock %}
-
-            </ul>
-        </div>
-    </nav>
-
-
-    {% block body %}
-
-    {% endblock %}
 
 </body>
-
 </html>

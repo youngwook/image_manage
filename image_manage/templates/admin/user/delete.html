@@ -19,17 +19,17 @@
             <thead>
                 <tr>
                     <th> Delete</th>
+                    <th> ID</th>
                     <th> User Name</th>
-                    <th> Priority</th>
                 </tr>
             </thead>
 
             <tbody>
             {% for message in messages %}
                 <tr>
-                    <td><input type="checkbox"  name="usr_id" value="{{message.usr_id}}"></td>
-                    <td>{{ message.usr_name}}</td>
-                    <td>{{ message.usr_group }}</td>
+                    <td><input type="checkbox"  name="ID" value="{{message.ID}}"></td>
+                    <td>{{ message.ID }}</td>
+                    <td>{{ message.Name}}</td>
                 </tr>
             {% endfor %}
             </tbody>

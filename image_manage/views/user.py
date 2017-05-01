@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
-from image_manage.database import db, User
+from image_manage.databases.database import db
+from image_manage.databases.Amodels import  User
 
 mod = Blueprint('user', __name__, url_prefix='/admin/user')
-item = [ 'usr_name', 'usr_pwd', 'usr_group']
+item = [ 'Name', 'Password']
 @mod.route('/')
 @mod.route('/list')
 def list():
@@ -12,9 +14,9 @@ def list():
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        user = db.session.query(User).filter_by(usr_name=request.form['usr_name']).first()
+        user = db.session.query(User).filter_by(Name=request.form['Name']).first()
         if user == None:
-            user = User(request.form['usr_name'], request.form['usr_pwd'], request.form['usr_group'])
+            user = User(request.form['Name'], request.form['Password'])
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('user.list'))
@@ -28,13 +30,13 @@ def create():
 def delete():
     messages = db.session.query(User).all()
     if request.method == 'POST':
-        id = request.form.getlist('usr_id')
+        id = request.form.getlist('ID')
         if not id:
             error = 'no one checked'
             return render_template('admin/user/delete.html', messages=messages, error=error)
 
         for i in id:
-            user = db.session.query(User).filter_by(usr_id=i).first()
+            user = db.session.query(User).filter_by(ID=i).first()
             db.session.delete(user)
             db.session.commit()
         return redirect(url_for('user.list'))

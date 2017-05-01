@@ -1,59 +1,28 @@
 {% extends "layout.html" %}
     {% block header %}
-    <div class="page-header">
-        <h1>
-            <span class="glyphicon glyphicon-log-in"></span> Login Page
-        </h1>
 
-    </div>
+        <span class="glyphicon glyphicon-log-in"></span> Login Page
+
     {% endblock %}
 
 {% block body %}
-{% if error %}<div>Error:{{ error }}</div>{% endif %}
 <script>
-  var time;
-  var t;
-  function timer() {
-     t = t-1;
-    document.getElementById("time").innerHTML=t;
 
-  }
-  function stopTimer(){
-    clearInterval(time);
-    document.getElementById("pin").type='hidden';
-    document.getElementById("time").innerHTML="";
-  }
-  function change() {
-    var x = document.forms["login"] ["node_ip"].value;
-    var y = document.forms["login"] ["usr_name"].value;
-    var z = document.forms["login"] ["pwd"].value;
-    if (x == null || x =="") {
-        alert("insert node ip")
-        return false;
-    }
-    else if (y == null || y =="") {
-        alert("insert user name")
-        return false;
-    }
-    else if (z == null || z =="") {
-        alert("insert pwd")
-        return false;
-    }
-    else {
-        t = 5;
-        document.getElementById("pin").type='text';
-        time = setInterval(function(){timer(5)}, 1000);
-        setTimeout(function(){stopTimer()},5000);
-    }
-  }
   function validateForm() {
-    var x = document.forms["login"] ["pin"].value;
-    var y = document.getElementById("pin").type;
-    if (y == "hidden"){
-        x = null;
+    var x = document.forms["login"] ["account"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("insert account")
+        return false;
     }
-    if (x == null || x =="") {
-        alert("insert pin number")
+    x = document.forms["login"] ["pwd"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("insert password")
+        return false;
+    }
+
+    x = document.forms["login"] ["otp"].value;
+    if (!x || x.search(/[\s]/g)>-1) {
+        alert("insert otp")
         return false;
     }
 
@@ -62,32 +31,31 @@
 </script>
 <form method="post" class="form-horizontal col-sm-offset-3" role="form" name="login" onsubmit="return validateForm()">
     <div class="form-group">
-        <label for="nip" class="col-sm-2 control-label"> Login Node IP: </label>
+        <label for="account" class="col-sm-2 control-label"> Account: </label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="nip" name="node_ip" placeholder="please enter ip">
+            <input type="text" class="form-control" id="account" name="account" placeholder="please enter account">
         </div>
     </div>
-    </div>
+
     <div class="form-group">
-        <label for="usr_name" class="col-sm-2 control-label"> username: </label>
+        <label for="pwd" class="col-sm-2 control-label"> Password: </label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="usr_name" name="usr_name" placeholder="please enter id">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="pwd" class="col-sm-2 control-label"> password: </label>
-        <div class="col-sm-4">
             <input type="password" class="form-control" id="pwd" name="pwd" placeholder="please enter password">
         </div>
-        <div class="col-sm-1">
-            <input type="button" class="form-control" id="ok" name="ok" value="ok" onclick="change()">
+    </div>
+
+
+    <div class="form-group">
+        <label for="otp" class="col-sm-2 control-label"> OTP: </label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="otp" name="otp" placeholder="please enter otp">
         </div>
     </div>
+
     <div class="form-group">
-        <div class="col-sm-4">
-            <input type="hidden" class="form-control" id="pin" name="pin" placeholder="please enter pin number" >
+        <div class="col-sm-offset-2 col-sm-2">
+            <input type="reset" class="form-control" value="cancel">
         </div>
-        <label class="col-sm-1 " id="time">  </label>
         <div class="col-sm-2">
             <input type="submit" class="form-control" value="log in">
         </div>

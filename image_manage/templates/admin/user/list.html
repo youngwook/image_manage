@@ -7,19 +7,19 @@
     {% block body %}
 
 
-    <table class="table table-bordered">
+    <table class="table">
         <thead>
             <tr>
+                <th> ID</th>
                 <th> User Name</th>
-                <th> Priority</th>
             </tr>
         </thead>
 
         <tbody>
             {% for message in messages %}
             <tr>
-                <td>{{ message.usr_name}}</td>
-                <td>{{ message.usr_group }}</td>
+                <td>{{ message.ID }}</td>
+                <td>{{ message.Name}}</td>
             </tr>
             {% endfor %}
         </tbody>
