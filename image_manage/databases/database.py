@@ -4,6 +4,6 @@ from image_manage import app
 db = SQLAlchemy(app)
 
 def init_db():
-    import image_manage.databases.models
+    import image_manage.databases.Amodels
     db.create_all()
     print 'databases success!'

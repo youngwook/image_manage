@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-from database import db, init_db, User, Img, init_db
+from databases.database import db, init_db
 
 #init_db()
 
@@ -15,8 +15,6 @@ for i in query:
 
 databases.session.remove()
 '''
-messages = db.session.query(User).all()
-for m in messages:
-    print(m.usr_name+ m.usr_group)
+
 
 db.session.remove()
