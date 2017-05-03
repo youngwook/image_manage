@@ -4,11 +4,30 @@
     {% endblock %}
 
 {% block body %}
-    <script>
-      function redirect(){
-        location.href='{{ url_for('image.list') }}';
-      }
-    </script>
+<script>
+
+  function clickReset() {
+    {% for oo in os %}
+
+        document.forms["create"] ["os-{{oo[0].Name}}"].disabled = true;
+
+    {% endfor %}
+
+    {% for li in lib %}
+
+        document.forms["create"] ["lib-{{li[0].Name}}"].disabled = true;
+
+    {% endfor %}
+
+    {% for p in pf %}
+
+        document.forms["create"] ["pf-{{p[0].Name}}"].disabled = true;
+
+    {% endfor %}
+
+  }
+
+</script>
 
 <script>
 
@@ -79,31 +98,17 @@
 <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
 
     <div class="form-group">
-        <label for="img_name" class="col-sm-3 control-label"> Image Name: </label>
+        <label for="ImageName" class="col-sm-3 control-label"> Image Name: </label>
         <div class=" col-sm-4">
-            <input type="text" class="form-control" id="img_name" name="img_name" placeholder="image name">
+            <input type="text" class="form-control" id="ImageName" name="ImageName" placeholder="image name">
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-3 control-label"> Choose Container Platform: </label>
-        {% for p in pf %}
-        {% if pf.index(p)%3 == 0 and pf.index(p) != 0 %}
-
-        <div class="col-sm-offset-3 col-sm-3">
-
-            {% else %}
-
-            <div class="col-sm-3">
-
-            {% endif %}
-                <label class="control-label inline">
-                    <input type="radio"  name="img_type" value="{{ p.pf_name }}" > {{ p.pf_name }}
-                </label>
-
+        <label for="Description" class="col-sm-3 control-label"> Description: </label>
+        <div class=" col-sm-4">
+            <input type="text" class="form-control" id="Description" name="Description" placeholder="Description">
         </div>
-        {% endfor %}
-
     </div>
 
     <div class="form-group">
@@ -112,59 +117,96 @@
         {% for oo in os %}
         {% if os.index(oo)%3 == 0 and os.index(oo) != 0 %}
 
-        <div class="col-sm-offset-3 col-sm-3">
+        <div class="col-sm-offset-3 col-sm-3"></div>
 
             {% else %}
 
-            <div class="col-sm-3">
+        <div class="col-sm-3">
 
             {% endif %}
             <label class="inline control-label">
-                <input type="radio"  name="os" value="{{ oo[0].os_type }}" onclick="clickRadio(name, value)">
+                <input type="radio"  name="os" value="{{ oo[0].Name }}" onclick="clickRadio(name, value)">
             </label>
+            {#
             <label class="inline control-label">
-                {{ oo[0].os_type  }}
+                {{ oo[0].Name  }}
             </label>
+            #}
             <label class="inline control-label">
-                <select class="form-control" name="os-{{ oo[0].os_type  }}" disabled>
+                <select class="form-control" name="os-{{ oo[0].Name  }}" disabled>
                     {% for o in oo %}
-                    <option>{{ o.os_version }}</option>
+                    <option>{{ o.Name+o.Version }}</option>
                     {% endfor %}
                 </select>
             </label>
-        </div>
 
+        </div>
         {% endfor %}
     </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"> Choose Container Platform: </label>
+        {% for p in pf %}
+        {% if pf.index(p)%3 == 0 and pf.index(p) != 0 %}
+
+        <div class="col-sm-offset-3 col-sm-3"></div>
+
+            {% else %}
+
+        <div class="col-sm-3">
+
+            {% endif %}
+            <label class="inline control-label">
+                <input type="radio"  name="pf" value="{{ p[0].Name  }}" onclick="clickRadio(name, value)">
+            </label>
+            {#
+            <label class="inline control-label">
+                {{ p[0].Name  }}
+            </label>
+            #}
+            <label class="inline control-label">
+                <select class="form-control" name="pf-{{ p[0].Name  }}" disabled>
+                    {% for l in p %}
+                    <option>{{ l.Name+l.Version }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+        </div>
+        {% endfor %}
+    </div>
+
 
     <div class="form-group">
         <label class="col-sm-3 control-label"> Parellel Library: </label>
         {% for li in lib %}
         {% if lib.index(li)%3 == 0 and lib.index(li) != 0 %}
 
-        <div class="col-sm-offset-3 col-sm-3">
+        <div class="col-sm-offset-3 col-sm-3"></div>
 
             {% else %}
 
-            <div class="col-sm-3">
+        <div class="col-sm-3">
 
             {% endif %}
             <label class="inline control-label">
-                <input type="radio"  name="lib" value="{{ li[0].lib_type  }}" onclick="clickRadio(name, value)">
+                <input type="radio"  name="lib" value="{{ li[0].Name  }}" onclick="clickRadio(name, value)">
             </label>
+            {#
             <label class="inline control-label">
-                {{ li[0].lib_type  }}
+                {{ li[0].Name  }}
             </label>
+            #}
             <label class="inline control-label">
-                <select class="form-control" name="lib-{{ li[0].lib_type  }}" disabled>
+                <select class="form-control" name="lib-{{ li[0].Name  }}" disabled>
                     {% for l in li %}
-                    <option>{{ l.lib_version }}</option>
+                    <option>{{ l.Name+l.Version }}</option>
                     {% endfor %}
                 </select>
             </label>
+
         </div>
         {% endfor %}
-
     </div>
 
 
@@ -174,33 +216,80 @@
         {% for ap in app %}
         {% if app.index(ap)%3 == 0 and app.index(ap) != 0 %}
 
-        <div class="col-sm-offset-3 col-sm-3">
+        <div class="col-sm-offset-3 col-sm-3"></div>
 
             {% else %}
 
-            <div class="col-sm-3">
+        <div class="col-sm-3">
 
             {% endif %}
             <label class="inline control-label">
-                <input type="checkbox"  name="application" value="{{ ap[0].app_group  }}" >
+                <input type="checkbox"  name="application" value="{{ ap[0].Name  }}" >
             </label>
+            {#
             <label class="inline control-label">
-                {{ ap[0].app_group  }}
+                {{ ap[0].Name  }}
             </label>
+            #}
             <label class="inline control-label">
-                <select class="form-control" name="app-{{ ap[0].app_group  }}" >
+                <select class="form-control" name="app-{{ ap[0].Name  }}" >
                     {% for a in ap %}
-                    <option>{{ a.app_name }}</option>
+                    <option>{{ a.Name+a.Version }}</option>
                     {% endfor %}
                 </select>
             </label>
+
         </div>
         {% endfor %}
     </div>
 
     <div class="form-group">
+        <label class="col-sm-3 control-label"> Choose Publication: </label>
+
+        <div class="col-sm-offset-3">
+            <div class="col-sm-3">
+
+                <label class="control-label inline">
+                    <input type="radio"  name="Public" value="True" > Yes
+                </label>
+
+            </div>
+            <div class="col-sm-3">
+
+                <label class="control-label inline">
+                    <input type="radio"  name="Public" value="False" > No
+                </label>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"> Likness: </label>
+
+        <div class="col-sm-offset-3">
+            <div class="col-sm-3">
+
+                <label class="control-label inline">
+                    <input type="radio"  name="Liked" value="True" > Yes
+                </label>
+
+            </div>
+            <div class="col-sm-3">
+
+                <label class="control-label inline">
+                    <input type="radio"  name="Liked" value="False" > No
+                </label>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
-            <input type="button" class="form-control" value="Cancel" onclick="redirect()">
+            <input type="reset" class="form-control" value="Reset" onclick="clickReset()">
         </div>
         <div class="col-sm-4">
             <input type="submit" class="form-control" value="Submit">
@@ -214,20 +303,30 @@
   function clickRadio(name, value) {
     {% for oo in os %}
     if(name == 'os') {
-        if (value == "{{oo[0].os_type}}") {
-            document.forms["create"] ["os-{{oo[0].os_type}}"].disabled = false;
+        if (value == "{{oo[0].Name}}") {
+            document.forms["create"] ["os-{{oo[0].Name}}"].disabled = false;
         } else {
-            document.forms["create"] ["os-{{oo[0].os_type}}"].disabled = true;
+            document.forms["create"] ["os-{{oo[0].Name}}"].disabled = true;
         }
     }
     {% endfor %}
 
     {% for li in lib %}
     if(name == 'lib') {
-        if (value == "{{li[0].lib_type}}") {
-            document.forms["create"] ["lib-{{li[0].lib_type}}"].disabled = false;
+        if (value == "{{li[0].Name}}") {
+            document.forms["create"] ["lib-{{li[0].Name}}"].disabled = false;
         } else {
-            document.forms["create"] ["lib-{{li[0].lib_type}}"].disabled = true;
+            document.forms["create"] ["lib-{{li[0].Name}}"].disabled = true;
+        }
+    }
+    {% endfor %}
+
+    {% for p in pf %}
+    if(name == 'pf') {
+        if (value == "{{p[0].Name}}") {
+            document.forms["create"] ["pf-{{p[0].Name}}"].disabled = false;
+        } else {
+            document.forms["create"] ["pf-{{p[0].Name}}"].disabled = true;
         }
     }
     {% endfor %}
@@ -235,4 +334,5 @@
   }
 
 </script>
+
 {% endblock %}
