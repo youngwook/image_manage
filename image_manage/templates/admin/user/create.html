@@ -13,15 +13,14 @@
     </script>
 
 
-<div class="row clearfix">
-    <div class="col-sm-offset-4">
+
 
     <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
 
         <div class="form-group">
             <label for="usr_name" class="col-sm-3 control-label"> UserName: </label>
             <div class=" col-sm-4">
-                <input type="text" class="form-control" id="usr_name" name="Name" placeholder="user name">
+                <input type="text" class="form-control" id="usr_name" name="Name" placeholder="User Name">
             </div>
         </div>
 
@@ -35,7 +34,7 @@
         <div class="form-group">
             <label for="pwd" class="col-sm-3 control-label"> Confirm Password: </label>
             <div class=" col-sm-4">
-                <input type="password" class="form-control" id="pwd" name="pwd" placeholder="confirm password">
+                <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Confirm Password">
             </div>
         </div>
 
@@ -49,8 +48,7 @@
         </div>
 
     </form>
-    </div>
-</div>
+
     {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
 <script>
 
@@ -63,7 +61,7 @@
     }
     {% endfor %}
 
-    var y1 = document.forms["create"] ["usr_pwd"].value;
+    var y1 = document.forms["create"] ["Password"].value;
     var y2 = document.forms["create"] ["pwd"].value;
     if (!y2 || y2.search(/[\s]/g)>-1) {
         alert("enter password again ");

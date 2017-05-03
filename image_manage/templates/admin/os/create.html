@@ -13,21 +13,20 @@
     </script>
 
 
-<div class="row clearfix">
-    <div class="col-sm-offset-4">
+
     <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
 
         <div class="form-group">
-            <label for="os_type" class="col-sm-3 control-label"> OS Type: </label>
+            <label for="Name" class="col-sm-3 control-label"> OS Name: </label>
             <div class=" col-sm-4">
-                <input type="text" class="form-control" id="os_type" name="os_type" placeholder="Operating System Type">
+                <input type="text" class="form-control" id="Name" name="Name" placeholder="Operating System Name">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="os_version" class="col-sm-3 control-label"> OS Version: </label>
+            <label for="Version" class="col-sm-3 control-label"> OS Version: </label>
             <div class=" col-sm-4">
-                <input type="text" class="form-control" id="os_version" name="os_version" placeholder="Operating System Version">
+                <input type="text" class="form-control" id="Version" name="Version" placeholder="Operating System Version">
             </div>
         </div>
 
@@ -41,19 +40,16 @@
         </div>
 
     </form>
-    </div>
-</div>
+
     {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
 <script>
 
   function validateForm() {
-    {% for i in item %}
-    var x = document.forms["create"] ["{{ i }}"].value;
+    var x = document.forms["create"] ["Name"].value;
     if (!x || x.search(/[\s]/g)>-1) {
-        alert("miss {{ i }}");
+        alert("enter Platform Name");
         return false;
     }
-    {% endfor %}
 
   }
 </script>

@@ -21,16 +21,16 @@
                 <tr>
                     <th> Delete</th>
                     <th> Application Name</th>
-                    <th> Application group</th>
+                    <th> Application Version</th>
                 </tr>
             </thead>
 
             <tbody>
             {% for message in messages %}
                 <tr>
-                    <td><input type="checkbox"  name="app_id" value="{{message.app_id}}"></td>
-                    <td>{{ message.app_name}}</td>
-                    <td>{{ message.app_group }}</td>
+                    <td><input type="checkbox"  name="ID" value="{{message.ID}}"></td>
+                    <td>{{ message.Name}}</td>
+                    <td>{{ message.Version }}</td>
                 </tr>
             {% endfor %}
             </tbody>

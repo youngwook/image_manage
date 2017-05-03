@@ -10,14 +10,16 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th> Platform</th>
+                <th> PlatformName</th>
+                <th> PlatformVersion</th>
             </tr>
         </thead>
 
         <tbody>
             {% for message in messages %}
             <tr>
-                <td>{{ message.pf_name}}</td>
+                <td>{{ message.Name}}</td>
+                <td>{{ message.Version}}</td>
             </tr>
             {% endfor %}
         </tbody>

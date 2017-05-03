@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
-from image_manage.database import db, Platform
+from image_manage.databases.database import db
+from image_manage.databases.Amodels import Platform
 
 mod = Blueprint('platform', __name__, url_prefix='/admin/platform')
 
@@ -12,9 +14,9 @@ def list():
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        platform = db.session.query(Platform).filter_by(pf_name=request.form['pf_name']).first()
+        platform = db.session.query(Platform).filter_by(Name=request.form['Name'], Version=request.form['Version']).first()
         if platform == None:
-            platform = Platform(request.form['pf_name'])
+            platform = Platform(request.form['Name'],request.form['Version'])
             db.session.add(platform)
             db.session.commit()
             return redirect(url_for('platform.list'))
@@ -27,18 +29,19 @@ def create():
 def delete():
     messages = db.session.query(Platform).all()
     if request.method == 'POST':
-        id = request.form.getlist('pf_id')
+        id = request.form.getlist('ID')
         if not id:
             error = 'no one checked'
             return render_template('admin/platform/delete.html', messages=messages, error=error)
 
         for i in id:
-            platform = db.session.query(Platform).filter_by(pf_id=i).first()
+            platform = db.session.query(Platform).filter_by(ID=i).first()
             db.session.delete(platform)
             db.session.commit()
         return redirect(url_for('platform.list'))
     return render_template('admin/platform/delete.html', messages=messages)
 
+'''
 @mod.route('/update', methods=['GET', 'POST'])
 def update():
     messages = db.session.query(Platform).all()
@@ -54,3 +57,4 @@ def update():
                 db.session.commit()
         return redirect(url_for('platform.list'))
     return render_template('admin/platform/update.html', messages=messages)
+'''

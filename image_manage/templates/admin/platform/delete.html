@@ -18,15 +18,17 @@
             <thead>
                 <tr>
                     <th> Delete</th>
-                    <th> Platform</th>
+                    <th> PlatformName</th>
+                    <th> PlatformVersion</th>
                 </tr>
             </thead>
 
             <tbody>
             {% for message in messages %}
                 <tr>
-                    <td><input type="checkbox"  name="pf_id" value="{{message.pf_id}}"></td>
-                    <td>{{ message.pf_name}}</td>
+                    <td><input type="checkbox"  name="ID" value="{{message.ID}}"></td>
+                    <td>{{ message.Name}}</td>
+                    <td>{{ message.Version}}</td>
                 </tr>
             {% endfor %}
             </tbody>

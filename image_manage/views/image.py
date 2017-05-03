@@ -1,15 +1,25 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
-from image_manage.database import db, Img, User, Platform, Os, Library, Application
+from image_manage.databases.database import db
+from image_manage.databases.Amodels import  Img, Os, Library, Application, Platform, User
 
 mod = Blueprint('image', __name__, url_prefix='/admin/image')
 item = ['img_id', 'img_name', 'img_type', 'img_state', 'img_size', 'img_time', 'usr_name']
+
 @mod.route('/')
 @mod.route('/list')
 def list():
-    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
-        .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
-                     User.usr_id).all()
+    messages = db.session.query(Img.ID, Img.UUID, Img.UserID, Img.ImageName,
+                                (Platform.Name + Platform.Version).label('PlatformID'),
+                                (Os.Name + Os.Version).label('OSID'),
+                                (Library.Name + Library.Version).label('LibraryID'),
+                                (Application.Name + Application.Version).label('AppID'),
+                                Img.Description, Img.Public, Img.Status, Img.Size, Img.UpdateTime, Img.Liked) \
+        .filter(Img.PlatformID == Platform.ID,
+                Img.OSID == Os.ID,
+                Img.LibraryID == Library.ID,
+                Img.AppID == Application.ID).all()
     return render_template('admin/image/list.html', messages=messages)
 
 @mod.route('/create', methods=['GET', 'POST'])
@@ -68,13 +78,20 @@ def create():
 
 @mod.route('/delete', methods=['GET', 'POST'])
 def delete():
-    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
-        .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
-                     User.usr_id).all()
+    messages = db.session.query(Img.ID, Img.UUID, Img.UserID, Img.ImageName,
+                                (Platform.Name + Platform.Version).label('PlatformID'),
+                                (Os.Name + Os.Version).label('OSID'),
+                                (Library.Name + Library.Version).label('LibraryID'),
+                                (Application.Name + Application.Version).label('AppID'),
+                                Img.Description, Img.Public, Img.Status, Img.Size, Img.UpdateTime, Img.Liked) \
+        .filter(Img.PlatformID == Platform.ID,
+                Img.OSID == Os.ID,
+                Img.LibraryID == Library.ID,
+                Img.AppID == Application.ID).all()
     if request.method == 'POST':
-        id = request.form.getlist('img_id')
+        id = request.form.getlist('ID')
         for i in id:
-            img = db.session.query(Img).filter_by(img_id=i).first()
+            img = db.session.query(Img).filter_by(ID=i).first()
             db.session.delete(img)
             db.session.commit()
             return redirect(url_for('image.list'))
@@ -82,13 +99,20 @@ def delete():
 
 @mod.route('/uplaod', methods=['GET', 'POST'])
 def upload():
-    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
-        .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
-                     User.usr_id).all()
+    messages = db.session.query(Img.ID, Img.UUID, Img.UserID, Img.ImageName,
+                                (Platform.Name + Platform.Version).label('PlatformID'),
+                                (Os.Name + Os.Version).label('OSID'),
+                                (Library.Name + Library.Version).label('LibraryID'),
+                                (Application.Name + Application.Version).label('AppID'),
+                                Img.Description, Img.Public, Img.Status, Img.Size, Img.UpdateTime, Img.Liked) \
+        .filter(Img.PlatformID == Platform.ID,
+                Img.OSID == Os.ID,
+                Img.LibraryID == Library.ID,
+                Img.AppID == Application.ID).all()
     if request.method == 'POST':
-        id = request.form.getlist('img_id')
+        id = request.form.getlist('ID')
         for i in id:
-            img = db.session.query(Img).filter_by(img_id=i).first()
+            img = db.session.query(Img).filter_by(ID_id=i).first()
 
             return redirect(url_for('image.list'))
     return render_template('admin/image/upload.html', messages=messages)

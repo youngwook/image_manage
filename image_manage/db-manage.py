@@ -58,8 +58,19 @@ db.session.commit()
 print Platform.as_dict(plat)
 
 '''
-query = Platform.query.all()
-for i in query:
-    print(i.Name)
+
+messages = db.session.query(Img.ID, Img.UUID, Img.UserID, Img.ImageName,
+                 (Platform.Name + Platform.Version).label('PlatformID'), (Os.Name + Os.Version).label('OSID'),
+                 (Library.Name + Library.Version).label('LibraryID'), (Application.Name + Application.Version).label('AppID'),
+                 Img.Description, Img.Public, Img.Status, Img.Size, Img.UpdateTime, Img.Liked)\
+    .filter(Img.PlatformID == Platform.ID,
+               Img.OSID == Os.ID,
+               Img.LibraryID == Library.ID,
+               Img.AppID == Application.ID).all()
+
+for message in messages:
+    print message.ID,  message.UUID,  message.UserID, message.ImageName,  message.PlatformID,\
+    message.OSID,  message.LibraryID,  message.AppID,  message.Description,  message.Public,\
+    message.Status,  message.Size,  message.UpdateTime,  message.Liked
 
 db.session.remove()

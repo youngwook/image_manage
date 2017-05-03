@@ -10,7 +10,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th> Library Type</th>
+                <th> Library Name</th>
                 <th> Library Version</th>
             </tr>
         </thead>
@@ -18,8 +18,8 @@
         <tbody>
             {% for message in messages %}
             <tr>
-                <td>{{ message.lib_type}}</td>
-                <td>{{ message.lib_version }}</td>
+                <td>{{ message.Name}}</td>
+                <td>{{ message.Version }}</td>
             </tr>
             {% endfor %}
         </tbody>

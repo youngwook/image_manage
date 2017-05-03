@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
-from image_manage.database import db, Library
+from image_manage.databases.database import db
+from image_manage.databases.Amodels import  Library
 
 mod = Blueprint('library', __name__, url_prefix='/admin/library')
-item = [ 'lib_type', 'lib_version']
+item = [ 'Name', 'Version']
+
 @mod.route('/')
 @mod.route('/list')
 def list():
@@ -12,9 +15,9 @@ def list():
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        library = db.session.query(Library).filter_by(lib_type=request.form['lib_type'], lib_version=request.form['lib_version']).first()
+        library = db.session.query(Library).filter_by(Name=request.form['Name'], Version=request.form['Version']).first()
         if library == None:
-            library = Library(request.form['lib_type'],request.form['lib_version'])
+            library = Library(request.form['Name'],request.form['Version'])
             db.session.add(library)
             db.session.commit()
             return redirect(url_for('library.list'))
@@ -27,18 +30,19 @@ def create():
 def delete():
     messages = db.session.query(Library).all()
     if request.method == 'POST':
-        id = request.form.getlist('lib_id')
+        id = request.form.getlist('ID')
         if not id:
             error = 'no one checked'
             return render_template('admin/library/delete.html', messages=messages, error=error)
 
         for i in id:
-            os = db.session.query(Library).filter_by(lib_id=i).first()
+            os = db.session.query(Library).filter_by(ID=i).first()
             db.session.delete(os)
             db.session.commit()
         return redirect(url_for('library.list'))
     return render_template('admin/library/delete.html', messages=messages)
 
+'''
 @mod.route('/update', methods=['GET', 'POST'])
 def update():
     messages = db.session.query(Library).all()
@@ -65,3 +69,4 @@ def update():
                 db.session.commit()
         return redirect(url_for('library.list'))
     return render_template('admin/library/update.html', messages=messages)
+'''

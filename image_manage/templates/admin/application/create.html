@@ -13,22 +13,20 @@
       }
     </script>
 
-<div class="row clearfix">
-    <div class="col-sm-offset-4">
 
     <form method="post" class="form-horizontal" role="form" name="create" onsubmit="return validateForm()">
 
         <div class="form-group">
-            <label for="app_name" class="col-sm-3 control-label"> Application Name: </label>
+            <label for="Name" class="col-sm-3 control-label"> Application Name: </label>
             <div class=" col-sm-4">
-                <input type="text" class="form-control" id="app_name" name="app_name" placeholder="application name">
+                <input type="text" class="form-control" id="Name" name="Name" placeholder="application Name">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="app_group" class="col-sm-3 control-label"> Application Group: </label>
+            <label for="Version" class="col-sm-3 control-label"> Application Version: </label>
             <div class=" col-sm-4">
-                <input type="text" class="form-control" id="app_group" name="app_group" placeholder="application group">
+                <input type="text" class="form-control" id="Version" name="Version" placeholder="application Version">
             </div>
         </div>
 
@@ -42,19 +40,16 @@
         </div>
 
     </form>
-    </div>
-</div>
+
     {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
 <script>
 
   function validateForm() {
-    {% for i in item %}
-    var x = document.forms["create"] ["{{ i }}"].value;
+    var x = document.forms["create"] ["Name"].value;
     if (!x || x.search(/[\s]/g)>-1) {
-        alert("miss {{ i }}");
+        alert("enter Platform Name");
         return false;
     }
-    {% endfor %}
 
   }
 </script>

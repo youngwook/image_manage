@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
-from image_manage.database import db, Application
+from image_manage.databases.database import db
+from image_manage.databases.Amodels import  Application
 
 mod = Blueprint('application', __name__, url_prefix='/admin/application')
-item = [ 'app_name', 'app_group']
+item = [ 'Name', 'Version']
+
 @mod.route('/')
 @mod.route('/list')
 def list():
@@ -12,9 +15,9 @@ def list():
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        app = db.session.query(Application).filter_by(app_name=request.form['app_name'], app_group=request.form['app_group']).first()
+        app = db.session.query(Application).filter_by(Name=request.form['Name'], Version=request.form['Version']).first()
         if app == None:
-            app = Application(request.form['app_name'],request.form['app_group'])
+            app = Application(request.form['Name'],request.form['Version'])
             db.session.add(app)
             db.session.commit()
             return redirect(url_for('application.list'))
@@ -27,18 +30,19 @@ def create():
 def delete():
     messages = db.session.query(Application).all()
     if request.method == 'POST':
-        id = request.form.getlist('app_id')
+        id = request.form.getlist('ID')
         if not id:
             error = 'no one checked'
             return render_template('admin/application/delete.html', messages=messages, error=error)
 
         for i in id:
-            app = db.session.query(Application).filter_by(app_id=i).first()
+            app = db.session.query(Application).filter_by(ID=i).first()
             db.session.delete(app)
             db.session.commit()
         return redirect(url_for('application.list'))
     return render_template('admin/application/delete.html', messages=messages)
 
+'''
 @mod.route('/update', methods=['GET', 'POST'])
 def update():
     messages = db.session.query(Application).all()
@@ -65,3 +69,4 @@ def update():
                 db.session.commit()
         return redirect(url_for('application.list'))
     return render_template('admin/application/update.html', messages=messages)
+'''
