@@ -5,7 +5,7 @@ from image_manage.databases.database import db
 from image_manage.databases.Amodels import  Img, Os, Library, Application, Platform, User
 
 mod = Blueprint('image', __name__, url_prefix='/admin/image')
-item = ['img_id', 'img_name', 'img_type', 'img_state', 'img_size', 'img_time', 'usr_name']
+item = ['os', 'library', 'application', 'platform']
 
 @mod.route('/')
 @mod.route('/list')
@@ -26,21 +26,24 @@ def list():
 def create():
 
     os = []
-    messages = db.session.query(Os.os_type.distinct().label('os_type')).all()
+    messages = db.session.query(Os.Name.distinct().label('Name')).all()
     for m in messages:
-        os.append(db.session.query(Os).filter_by(os_type=m.os_type).all())
+        os.append(db.session.query(Os).filter_by(Name=m.Name).all())
 
     lib = []
-    messages = db.session.query(Library.lib_type.distinct().label('lib_type')).all()
+    messages = db.session.query(Library.Name.distinct().label('Name')).all()
     for m in messages:
-        lib.append(db.session.query(Library).filter_by(lib_type=m.lib_type).all())
+        lib.append(db.session.query(Library).filter_by(Name=m.Name).all())
 
     app = []
-    messages = db.session.query(Application.app_group.distinct().label('app_group')).all()
+    messages = db.session.query(Application.Name.distinct().label('Name')).all()
     for m in messages:
-        app.append(db.session.query(Application).filter_by(app_group=m.app_group).all())
+        app.append(db.session.query(Application).filter_by(Name=m.Name).all())
 
-    pf = Platform.query.all()
+    pf = []
+    messages = db.session.query(Platform.Name.distinct().label('Name')).all()
+    for m in messages:
+        pf.append(db.session.query(Platform).filter_by(Name=m.Name).all())
 
     if request.method == 'POST':
         img_name = request.form['img_name']
@@ -72,7 +75,6 @@ def create():
             error = 'the user name already exits'
             return render_template('admin/image/create.html', pf=pf, os=os, lib=lib, app=app, error=error)
 
-        message = 'img name is {0}, img_type is {1}, os is {2}, lib is {3}, application is {4},,'.format(img_name, img_type, os_version, lib_version, app_name)
         return render_template('admin/image/create.html', pf=pf, os=os, lib=lib, app=app, message=message)
     return render_template('admin/image/create.html', pf=pf, os=os, lib=lib, app=app)
 
