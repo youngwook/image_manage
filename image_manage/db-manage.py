@@ -58,7 +58,7 @@ db.session.commit()
 print Platform.as_dict(plat)
 
 '''
-
+'''
 messages = db.session.query(Img.ID, Img.UUID, Img.UserID, Img.ImageName,
                  (Platform.Name + Platform.Version).label('PlatformID'), (Os.Name + Os.Version).label('OSID'),
                  (Library.Name + Library.Version).label('LibraryID'), (Application.Name + Application.Version).label('AppID'),
@@ -72,5 +72,47 @@ for message in messages:
     print message.ID,  message.UUID,  message.UserID, message.ImageName,  message.PlatformID,\
     message.OSID,  message.LibraryID,  message.AppID,  message.Description,  message.Public,\
     message.Status,  message.Size,  message.UpdateTime,  message.Liked
+'''
+'''
+messages = db.session.query(Img).filter((Img.PlatformID==None) | (Img.LibraryID == None)).all()
+#m = db.session.query(Img).filter(Img.PlatformID!=None , Img.LibraryID != None).all()
+#messages = messages + m
+'''
+'''
+messages = db.session.query(Img). \
+    join(Platform).\
+    join(Os).\
+    join(Library).\
+    join(Application). \
+    filter((Platform.ID == Img.PlatformID)|(Os.ID== Img.OSID)|(Library.ID==Img.LibraryID)|( Application.ID==Img.AppID)).\
+    add_columns(Img.ID, Img.UUID, Img.UserID, Img.ImageName,
+                 (Platform.Name + Platform.Version).label('PlatformID'), (Os.Name + Os.Version).label('OSID'),
+                 (Library.Name + Library.Version).label('LibraryID'), (Application.Name + Application.Version).label('AppID'),
+                 Img.Description, Img.Public, Img.Status, Img.Size, Img.UpdateTime, Img.Liked).all()
+'''
+pf =  db.session.query(Platform).all()
+lib = db.session.query(Library).all()
+app = db.session.query(Application).all()
 
+m = db.session.query(Img).all()
+for i in range(0,len(m)-1):
+    if m[i].PlatformID !=None:
+        for p in pf:
+            if p.ID == m[i].PlatformID:
+                m[i].PlatformID = p.Name + p.Version
+
+    if m[i].LibraryID!=None:
+        for li in lib:
+            m[i].LibraryID = li.Name + li.Version
+
+    if m[i].AppID!=None:
+        for a in app:
+            m[i].AppID = a.Name + a.Version
+
+    print '----------'
+
+for message in m:
+    print message.ID,  message.UUID,  message.UserID, message.ImageName,  message.PlatformID,\
+    message.OSID,  message.LibraryID,  message.AppID,  message.Description,  message.Public,\
+    message.Status,  message.Size,  message.UpdateTime,  message.Liked
 db.session.remove()

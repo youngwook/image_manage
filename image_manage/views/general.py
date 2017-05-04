@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
-from image_manage.database import db, Img, User, Platform, Os, Library, Application
+from image_manage.databases.database import db
+from image_manage.databases.Amodels import  Img, Os, Library, Application, Platform, User
+import copy
 
 mod = Blueprint('general', __name__, url_prefix='/general')
 
@@ -10,88 +13,182 @@ def index():
 
 @mod.route('/list', methods=['GET', 'POST'])
 def list():
-    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
-        .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
-                     User.usr_id).all()
+    pf = db.session.query(Platform).all()
+    lib = db.session.query(Library).all()
+    app = db.session.query(Application).all()
+    os = db.session.query(Os).all()
+    m = db.session.query(Img).all()
+    messages = copy.deepcopy(m)
+    for i in range(0, len(messages)):
+        if messages[i].PlatformID !='None':
+            for p in pf:
+                if p.ID == messages[i].PlatformID:
+                    messages[i].PlatformID = p.Name + p.Version
+
+        if messages[i].LibraryID !='None':
+            for li in lib:
+                if li.ID == messages[i].LibraryID:
+                    messages[i].LibraryID = li.Name + li.Version
+
+        if messages[i].AppID !='None':
+            for a in app:
+                if a.ID == messages[i].AppID:
+                    messages[i].AppID = a.Name + a.Version
+
+        if messages[i].OSID !='None':
+            for o in os:
+                if o.ID == messages[i].OSID:
+                    messages[i].OSID = o.Name + o.Version
+
     return render_template('general/list.html', messages=messages)
 
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
 
     os = []
-    messages = db.session.query(Os.os_type.distinct().label('os_type')).all()
+    messages = db.session.query(Os.Name.distinct().label('Name')).all()
     for m in messages:
-        os.append(db.session.query(Os).filter_by(os_type=m.os_type).all())
+        os.append(db.session.query(Os).filter_by(Name=m.Name).all())
 
-    lib = []
-    messages = db.session.query(Library.lib_type.distinct().label('lib_type')).all()
+    library = []
+    messages = db.session.query(Library.Name.distinct().label('Name')).all()
     for m in messages:
-        lib.append(db.session.query(Library).filter_by(lib_type=m.lib_type).all())
+        library.append(db.session.query(Library).filter_by(Name=m.Name).all())
 
-    app = []
-    messages = db.session.query(Application.app_group.distinct().label('app_group')).all()
+    application = []
+    messages = db.session.query(Application.Name.distinct().label('Name')).all()
     for m in messages:
-        app.append(db.session.query(Application).filter_by(app_group=m.app_group).all())
+        application.append(db.session.query(Application).filter_by(Name=m.Name).all())
 
-    pf = Platform.query.all()
+    platform = []
+    messages = db.session.query(Platform.Name.distinct().label('Name')).all()
+    for m in messages:
+        platform.append(db.session.query(Platform).filter_by(Name=m.Name).all())
 
     if request.method == 'POST':
-        img_name = request.form['img_name']
-        img_type = request.form['img_type']
-        for o in os:
-            os_type = request.form['os']
-            if (os_type == o[0].os_type):
-                os_version =  request.form['os-{}'.format(os_type)]
+        UUID = 'uuid'
+        UserID = 'root'
+        ImageName = request.form['ImageName']
 
-        for l in lib:
-            lib_type = request.form['lib']
-            if (lib_type == l[0].lib_type):
-                lib_version =  request.form['lib-{}'.format(lib_type)]
+        pf_name = request.form.get('pf')
+        pf_version = None
+        if not pf_name or pf_name == 'None':
+            PlatformID = None
+        else :
+            pf_version = request.form['pf-{}'.format(pf_name)]
+            PlatformID = db.session.query(Platform).filter(pf_version == (Platform.Name + Platform.Version)).first().ID
 
-        app_name = []
-        for a in app:
-            app_groups = request.form.getlist('application')
-            for app_group in app_groups:
-                if (app_group == a[0].app_group):
-                    app_name.append(a)
+        os_name = request.form['os']
+        os_version = request.form['os-{}'.format(os_name)]
+        OSID = db.session.query(Os).filter(os_version == (Os.Name + Os.Version)).first().ID
 
-        img = db.session.query(Img).filter_by(img_name=request.form['img_name']).first()
-        if img == None:
-            img = Img(img_name,img_type,"creating","---",datetime.utcnow(),2)
-            db.session.add(img)
-            db.session.commit()
-            return redirect(url_for('general.list'))
+        lib_name = request.form.get('lib', None)
+        lib_version = None
+        if not lib_name or lib_name == 'None':
+            LibraryID = None
         else:
-            error = 'the image name already exits'
-            return render_template('general/create.html', pf=pf, os=os, lib=lib, app=app, error=error)
+            lib_version = request.form['lib-{}'.format(lib_name)]
+            LibraryID = db.session.query(Library).filter(lib_version == (Library.Name + Library.Version)).first().ID
 
-        message = 'img name is {0}, img_type is {1}, os is {2}, lib is {3}, application is {4},,'.format(img_name, img_type, os_version, lib_version, app_name)
-        return render_template('general/create.html', pf=pf, os=os, lib=lib, app=app, message=message)
-    return render_template('general/create.html', pf=pf, os=os, lib=lib, app=app)
+        app_names = request.form.getlist('application')
+        app_version = None
+        if not app_names or app_names == 'None':
+            AppID = None
+        else:
+            app_name = []
+            for n in app_names:
+                app_name.append(n)
+            app_version = request.form['app-{}'.format(app_name[0])]
+            AppID = db.session.query(Application).filter(app_version == (Application.Name + Application.Version)).first().ID
+
+        Description = request.form['Description']
+        Public = bool(request.form['Public'])
+        Status = 'creating'
+        Size = '---'
+        UpdateTime = datetime.utcnow()
+        Liked = True
+
+        error = [UUID, UserID, ImageName, PlatformID, OSID, LibraryID, AppID, Description, Public, Status, Size, UpdateTime, Liked]
+
+        img = Img(UUID, UserID, ImageName, PlatformID, OSID, LibraryID, AppID, Description, Public, Status, Size, UpdateTime, Liked)
+        db.session.add(img)
+        db.session.commit()
+        return redirect(url_for('general.list'))
+    return render_template('general/create.html', platform=platform, os=os, library=library,
+                               application=application)
 
 
 @mod.route('/delete', methods=['GET', 'POST'])
 def delete():
-    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
-        .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
-                     User.usr_id).all()
+    pf = db.session.query(Platform).all()
+    lib = db.session.query(Library).all()
+    app = db.session.query(Application).all()
+    os = db.session.query(Os).all()
+    m = db.session.query(Img).all()
+    messages = copy.deepcopy(m)
+    for i in range(0, len(messages)):
+        if messages[i].PlatformID !='None':
+            for p in pf:
+                if p.ID == messages[i].PlatformID:
+                    messages[i].PlatformID = p.Name + p.Version
+
+        if messages[i].LibraryID !='None':
+            for li in lib:
+                if li.ID == messages[i].LibraryID:
+                    messages[i].LibraryID = li.Name + li.Version
+
+        if messages[i].AppID !='None':
+            for a in app:
+                if a.ID == messages[i].AppID:
+                    messages[i].AppID = a.Name + a.Version
+
+        if messages[i].OSID !='None':
+            for o in os:
+                if o.ID == messages[i].OSID:
+                    messages[i].OSID = o.Name + o.Version
+
     if request.method == 'POST':
-        id = request.form.getlist('img_id')
+        id = request.form.getlist('ID')
         for i in id:
-            img = db.session.query(Img).filter_by(img_id=i).first()
+            img = db.session.query(Img).filter_by(ID=i).first()
             db.session.delete(img)
             db.session.commit()
         return redirect(url_for('general.list'))
+
     return render_template('general/delete.html', messages=messages)
 
 @mod.route('/upload', methods=['GET', 'POST'])
 def upload():
-    messages = db.session.query(Img).join(User, Img.img_owner == User.usr_id) \
-        .add_columns(Img.img_id, Img.img_name, Img.img_type, Img.img_state, Img.img_size, Img.img_time, User.usr_name,
-                     User.usr_id).all()
+    pf = db.session.query(Platform).all()
+    lib = db.session.query(Library).all()
+    app = db.session.query(Application).all()
+    os = db.session.query(Os).all()
+    m = db.session.query(Img).all()
+    messages = copy.deepcopy(m)
+    for i in range(0, len(messages)):
+        if messages[i].PlatformID !='None':
+            for p in pf:
+                if p.ID == messages[i].PlatformID:
+                    messages[i].PlatformID = p.Name + p.Version
+
+        if messages[i].LibraryID !='None':
+            for li in lib:
+                if li.ID == messages[i].LibraryID:
+                    messages[i].LibraryID = li.Name + li.Version
+
+        if messages[i].AppID !='None':
+            for a in app:
+                if a.ID == messages[i].AppID:
+                    messages[i].AppID = a.Name + a.Version
+
+        if messages[i].OSID !='None':
+            for o in os:
+                if o.ID == messages[i].OSID:
+                    messages[i].OSID = o.Name + o.Version
+
     if request.method == 'POST':
-        id = request.form.getlist('img_id')
+        id = request.form.getlist('ID')
         for i in id:
-            img = db.session.query(Img).filter_by(img_id=i).first()
+            img = db.session.query(Img).filter_by(ID_id=i).first()
 
     return render_template('general/upload.html', messages=messages)

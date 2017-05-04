@@ -9,24 +9,38 @@
     <thead>
         <tr>
             <th> ID</th>
-            <th> Name</th>
-            <th> Type</th>
-            <th> State</th>
+            <th> UUID</th>
+            <th> User</th>
+            <th> ImageName</th>
+            <th> Platform</th>
+            <th> OS</th>
+            <th> Library</th>
+            <th> Applications</th>
+            <th> Description</th>
+            <th> Public</th>
+            <th> Status</th>
             <th> Size</th>
-            <th> Upadate Date</th>
-            <th> Owner</th>
+            <th> UpdateTime</th>
+            <th> Liked</th>
         </tr>
     </thead>
     <tbody>
         {% for message in messages %}
         <tr>
-            <td>{{ message.img_id }}</td>
-            <td>{{ message.img_name }}</td>
-            <td>{{ message.img_type }}</td>
-            <td>{{ message.img_state }}</td>
-            <td>{{ message.img_size }}</td>
-            <td>{{ message.img_time }}</td>
-            <td>{{ message.usr_name }}</td>
+            <td>{{ message.ID }}</td>
+            <td>{{ message.UUID }}</td>
+            <td>{{ message.UserID }}</td>
+            <td>{{ message.ImageName }}</td>
+            <td>{{ message.PlatformID }}</td>
+            <td>{{ message.OSID }}</td>
+            <td>{{ message.LibraryID }}</td>
+            <td>{{ message.AppID }}</td>
+            <td>{{ message.Description }}</td>
+            <td>{{ message.Public }}</td>
+            <td>{{ message.Status }}</td>
+            <td>{{ message.Size }}</td>
+            <td>{{ message.UpdateTime }}</td>
+            <td>{{ message.Liked }}</td>
         </tr>
         {% endfor %}
     </tbody>

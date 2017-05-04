@@ -13,13 +13,13 @@
 
     {% endfor %}
 
-    {% for li in lib %}
+    {% for li in library %}
 
         document.forms["create"] ["lib-{{li[0].Name}}"].disabled = true;
 
     {% endfor %}
 
-    {% for p in pf %}
+    {% for p in platform %}
 
         document.forms["create"] ["pf-{{p[0].Name}}"].disabled = true;
 
@@ -34,16 +34,9 @@
   function validateForm() {
 
 
-    var img_name = document.forms["create"] ["img_name"].value;
+    var img_name = document.forms["create"] ["ImageName"].value;
     if (!img_name || img_name.search(/[\s]/g)>-1) {
         alert("insert image name");
-        return false;
-    }
-
-    var img_type = document.forms["create"] ["img_type"].value;
-
-    if (!img_type || img_type.search(/[\s]/g)>-1) {
-        alert("choose container platform");
         return false;
     }
 
@@ -54,28 +47,54 @@
             alert("choose operation system");
             return false;
         }
-        if (value == "{{ o[0].os_type }}"){
-            os_value = document.forms["create"] ["os-{{ o[0].os_type }}"].value;
+        if (value == "{{ o[0].Name }}"){
+            os_value = document.forms["create"] ["os-{{ o[0].Name }}"].value;
         }
     {% endfor %}
 
+    var public = document.forms["create"] ["Public"].value;
+
+    if (!public) {
+        alert("choose publication");
+        return false;
+    }
+
+    var liked = document.forms["create"] ["Liked"].value;
+
+    if (!liked) {
+        alert("choose likeness");
+        return false;
+    }
+
+
+    var pf_value = "";
+    {% for p in platform %}
+        var value = document.forms["create"] ["pf"].value;
+        if (!value) {
+            if (value == "{{ p[0].Name }}"){
+                pf_value = value + document.forms["create"] ["pf-{{ p[0].Name }}"].value;
+            }
+        }
+    {% endfor %}
+
+
+
     var lib_value = "";
-    {% for l in lib %}
+    {% for l in library %}
         var value = document.forms["create"] ["lib"].value;
         if (!value) {
-            alert("choose library");
-            return false;
+            if (value == "{{ l[0].Name }}"){
+                lib_value = value + document.forms["create"] ["lib-{{ l[0].Name }}"].value;
+            }
         }
-        if (value == "{{ l[0].lib_type }}"){
-            lib_value = document.forms["create"] ["lib-{{ l[0].lib_type }}"].value;
-        }
+
     {% endfor %}
 
     var app_value = "";
-    {% for a in app %}
+    {% for a in application %}
         var value = document.forms["create"] ["application"].value;
         if (!value){
-            app_value += document.forms["create"] ["app-{{ a[0].app_group }}"].value;
+            app_value += value + document.forms["create"] ["app-{{ a[0].app_group }}"].value;
         }
     {% endfor %}
 
@@ -146,8 +165,8 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label"> Choose Container Platform: </label>
-        {% for p in pf %}
-        {% if pf.index(p)%3 == 0 and pf.index(p) != 0 %}
+        {% for p in platform %}
+        {% if platform.index(p)%3 == 0 and platform.index(p) != 0 %}
 
         <div class="col-sm-offset-3 col-sm-3"></div>
 
@@ -169,6 +188,7 @@
                     {% for l in p %}
                     <option>{{ l.Name+l.Version }}</option>
                     {% endfor %}
+                    <option>None</option>
                 </select>
             </label>
 
@@ -179,8 +199,8 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label"> Parellel Library: </label>
-        {% for li in lib %}
-        {% if lib.index(li)%3 == 0 and lib.index(li) != 0 %}
+        {% for li in library %}
+        {% if library.index(li)%3 == 0 and library.index(li) != 0 %}
 
         <div class="col-sm-offset-3 col-sm-3"></div>
 
@@ -202,6 +222,7 @@
                     {% for l in li %}
                     <option>{{ l.Name+l.Version }}</option>
                     {% endfor %}
+                    <option>None</option>
                 </select>
             </label>
 
@@ -213,8 +234,8 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label"> Other Application: </label>
-        {% for ap in app %}
-        {% if app.index(ap)%3 == 0 and app.index(ap) != 0 %}
+        {% for ap in application %}
+        {% if application.index(ap)%3 == 0 and application.index(ap) != 0 %}
 
         <div class="col-sm-offset-3 col-sm-3"></div>
 
@@ -236,6 +257,7 @@
                     {% for a in ap %}
                     <option>{{ a.Name+a.Version }}</option>
                     {% endfor %}
+                    <option>None</option>
                 </select>
             </label>
 
@@ -264,7 +286,7 @@
 
         </div>
     </div>
-
+{#
     <div class="form-group">
         <label class="col-sm-3 control-label"> Likness: </label>
 
@@ -286,6 +308,7 @@
 
         </div>
     </div>
+#}
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
@@ -297,7 +320,8 @@
     </div>
 
 </form>
-    {% if error %}<div class="col-sm-offset-4">{{ error }}</div>{% endif %}
+    {% if error %}<div class="col-sm-offset-4">{% for e in error %} {{ e }} {% endfor %}</div>{% endif %}
+ {% if qq %}<div class="col-sm-offset-4">{% for e in qq %} {{ e }} {% endfor %}</div>{% endif %}
 <script>
 
   function clickRadio(name, value) {
@@ -311,7 +335,7 @@
     }
     {% endfor %}
 
-    {% for li in lib %}
+    {% for li in library %}
     if(name == 'lib') {
         if (value == "{{li[0].Name}}") {
             document.forms["create"] ["lib-{{li[0].Name}}"].disabled = false;
@@ -321,7 +345,7 @@
     }
     {% endfor %}
 
-    {% for p in pf %}
+    {% for p in platform %}
     if(name == 'pf') {
         if (value == "{{p[0].Name}}") {
             document.forms["create"] ["pf-{{p[0].Name}}"].disabled = false;
