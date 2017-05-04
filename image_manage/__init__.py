@@ -12,9 +12,13 @@ def before_request():
     '''요청이 들어오기 전에 세션 체크 '''
 
 
+
 @app.teardown_request
 def teardown_request(exception):
     '''요청이 끝날 때 데이터베이스 연결 차단'''
+    g.ssh.close()
+    g.user = None
+    g.ssh = None
     db.session.remove()
 
 from image_manage.views import login
