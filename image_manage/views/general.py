@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import desc
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
 from image_manage.databases.database import db
 from image_manage.databases.Amodels import  Img, Os, Library, Application, Platform, User
@@ -17,7 +18,7 @@ def list():
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
     os = db.session.query(Os).all()
-    m = db.session.query(Img).all()
+    m = db.session.query(Img).order_by(desc(Img.UpdateTime)).filter_by(UserID='general').all()
     messages = copy.deepcopy(m)
     for i in range(0, len(messages)):
         if messages[i].PlatformID !='None':
@@ -66,8 +67,8 @@ def create():
         platform.append(db.session.query(Platform).filter_by(Name=m.Name).all())
 
     if request.method == 'POST':
-        UUID = 'uuid'
-        UserID = 'root'
+        UUID = '8660830F-dd2b-4b0e-g4bc-5b32267004b1'
+        UserID = 'general'
         ImageName = request.form['ImageName']
 
         pf_name = request.form.get('pf')
@@ -124,7 +125,7 @@ def delete():
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
     os = db.session.query(Os).all()
-    m = db.session.query(Img).all()
+    m = db.session.query(Img).order_by(desc(Img.UpdateTime)).filter_by(UserID='general').all()
     messages = copy.deepcopy(m)
     for i in range(0, len(messages)):
         if messages[i].PlatformID !='None':
@@ -163,7 +164,7 @@ def upload():
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
     os = db.session.query(Os).all()
-    m = db.session.query(Img).all()
+    m = db.session.query(Img).order_by(desc(Img.UpdateTime)).filter_by(UserID='general').all()
     messages = copy.deepcopy(m)
     for i in range(0, len(messages)):
         if messages[i].PlatformID !='None':

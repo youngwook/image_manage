@@ -18,7 +18,6 @@
     <thead>
         <tr>
             <th> Select</th>
-            <th> ID</th>
             <th> UUID</th>
             <th> User</th>
             <th> ImageName</th>
@@ -38,7 +37,6 @@
         {% for message in messages %}
         <tr>
             <td><input type="checkbox"  name="ID" value="{{message.ID}}"></td>
-            <td>{{ message.ID }}</td>
             <td>{{ message.UUID }}</td>
             <td>{{ message.UserID }}</td>
             <td>{{ message.ImageName }}</td>
