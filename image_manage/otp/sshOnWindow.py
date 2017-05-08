@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-from sys import platform as pf
 import pexpect
-if pf == 'win32':
-    from pexpect.popen_spawn import PopenSpawn
 
 def sshConnect(account, ps, otp):
 #    ssh = pexpect.spawn('ssh p326jin@login01.plsi.or.kr')
-    if pf == 'win32':
-        ssh = PopenSpawn('ssh {}'.format(account))
-    else:
-        ssh = pexpect.spawn('ssh {}'.format(account))
+
+    ssh = pexpect.popen_spawn.PopenSpawn('ssh {}'.format(account))
+
     PROMPT = ['#:','$:']
 
     try:
