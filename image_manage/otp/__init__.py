@@ -9,21 +9,21 @@ def sshConnect(account, ps, otp):
     PROMPT = ['#:','$:']
 
     try:
-        i = ssh.expect([ '[P|p]assword(OTP)', 'Are you sure you want to continue connecting (yes/no)?'], timeout=5)
+        i = ssh.expect([ '[P|p]assword\(OTP\)', 'Are you sure you want to continue connecting \(yes\/no\)\?'], timeout=5)
 
         if i == 0:
-            ssh.expect(['[P|p]assword(OTP):'])
+            ssh.expect(['[P|p]assword\(OTP\)\:'])
             ssh.sendline(str(otp))
-            ssh.expect(['[P|p]assword:'])
+            ssh.expect(['[P|p]assword\:'])
             ssh.sendline(ps)
             return ssh
 
         elif i == 1:
 
             ssh.sendline('yes')
-            ssh.expect(['[P|p]assword(OTP):'])
+            ssh.expect(['[P|p]assword\(OTP\)\:'])
             ssh.sendline(str(otp))
-            ssh.expect(['[P|p]assword:'])
+            ssh.expect(['[P|p]assword\:'])
             ssh.sendline(ps)
             return ssh
 

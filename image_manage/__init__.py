@@ -10,15 +10,18 @@ from image_manage.databases.database import db
 @app.before_request
 def before_request():
     '''요청이 들어오기 전에 세션 체크 '''
-
-
+    g.user = None
+    if 'user' in session:
+        g.user = session['user']
+    if g.user == None:
+        if hasattr(g, 'ssh'):
+            g.ssh.close()
+            g.ssh = None
 
 @app.teardown_request
 def teardown_request(exception):
     '''요청이 끝날 때 데이터베이스 연결 차단'''
-    g.ssh.close()
-    g.user = None
-    g.ssh = None
+
     db.session.remove()
 
 from image_manage.views import login

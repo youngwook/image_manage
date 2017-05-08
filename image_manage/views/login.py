@@ -25,18 +25,21 @@ def login():
             g.user = account.split('@')[0]
             g.ssh = ssh
             user = db.session.query(User).filter_by(Name=g.user).first()
+            session['user'] = g.user
             if g.user == user:
                 return redirect(url_for('admin.index'))
             else:
                 redirect(url_for('general.index'))
 
-            error = ''
+        else:
+            error = 'login failed'
             return render_template('login.html', error = error)
 
     return render_template('login.html')
 
 @mod.route('/logout')
 def logout():
+    session.pop('user', None)
     g.ssh.close()
     g.user = None
     g.ssh = None
