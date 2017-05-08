@@ -33,13 +33,10 @@ def sshConnect(account, ps, otp):
 
     except pexpect.EOF:
         print "EOF"
-        ssh.close()
         return None
 
     except pexpect.TIMEOUT:
         print "timeout"
-        ssh.close()
         return None
 
-    ssh.close()
-    return ssh
+    return None
