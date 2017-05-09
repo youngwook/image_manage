@@ -3,7 +3,14 @@ from datetime import datetime, timedelta
 from flask import Flask,render_template, request, session, url_for, redirect, g
 
 app = Flask(__name__)
-app.config.from_object('config')
+
+from sys import platform as pf
+
+if pf == "linux" or pf == "linux2":
+    app.config.from_object('config')
+elif pf == "win32":
+    app.config.from_object('config_for_windows')
+
 app.permanent_session_lifetime = timedelta(seconds=30)
 from image_manage.databases.database import db
 

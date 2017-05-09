@@ -43,7 +43,7 @@ def logout():
     if hasattr(g, 'ssh'):
         g.ssh.close()
         g.ssh = None
-        
+
     if hasattr(g, 'user'):
         g.user = None
 
