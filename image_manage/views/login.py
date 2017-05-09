@@ -29,7 +29,7 @@ def login():
             if g.user == user:
                 return redirect(url_for('admin.index'))
             else:
-                redirect(url_for('general.index'))
+                return redirect(url_for('general.index'))
 
         else:
             error = 'login failed'
@@ -40,7 +40,11 @@ def login():
 @mod.route('/logout')
 def logout():
     session.pop('user', None)
-    g.ssh.close()
-    g.user = None
-    g.ssh = None
+    if hasattr(g, 'ssh'):
+        g.ssh.close()
+        g.ssh = None
+        
+    if hasattr(g, 'user'):
+        g.user = None
+
     return redirect(url_for('login.index'))

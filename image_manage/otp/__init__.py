@@ -7,16 +7,15 @@ if pf == 'win32':
 def sshConnect(account, ps, otp):
 #    ssh = pexpect.spawn('ssh p326jin@login01.plsi.or.kr')
     if pf == 'win32':
-        ssh = PopenSpawn('ssh {}'.format(account))
+        ssh = PopenSpawn(('ssh %s' % account))
     else:
-        ssh = pexpect.spawn('ssh {}'.format(account))
+        ssh = pexpect.spawn(('ssh %s' % account))
     PROMPT = ['#:','$:']
 
     try:
-        i = ssh.expect([ '[P|p]assword\(OTP\)', 'Are you sure you want to continue connecting \(yes\/no\)\?'], timeout=5)
+        i = ssh.expect([ '[P|p]assword\(OTP\)\:', 'Are you sure you want to continue connecting \(yes\/no\)\?'], timeout=5)
 
         if i == 0:
-            ssh.expect(['[P|p]assword\(OTP\)\:'])
             ssh.sendline(str(otp))
             ssh.expect(['[P|p]assword\:'])
             ssh.sendline(ps)
