@@ -4,6 +4,8 @@ from flask import Flask,render_template, request, session, url_for, redirect, g
 
 app = Flask(__name__)
 
+sshConnector = {}
+
 from sys import platform as pf
 
 if pf == "linux" or pf == "linux2":
@@ -11,7 +13,7 @@ if pf == "linux" or pf == "linux2":
 elif pf == "win32":
     app.config.from_object('config_for_windows')
 
-app.permanent_session_lifetime = timedelta(seconds=30)
+app.permanent_session_lifetime = timedelta(seconds=60)
 from image_manage.databases.database import db
 
 @app.before_request
@@ -20,10 +22,6 @@ def before_request():
     g.user = None
     if 'user' in session:
         g.user = session['user']
-    if g.user == None:
-        if hasattr(g, 'ssh'):
-            g.ssh.close()
-            g.ssh = None
 
 @app.teardown_request
 def teardown_request(exception):
