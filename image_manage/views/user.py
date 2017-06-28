@@ -2,17 +2,20 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
 from image_manage.databases.database import db
 from image_manage.databases.Amodels import  User
+from image_manage.views.admin import check
 
 mod = Blueprint('user', __name__, url_prefix='/admin/user')
 item = [ 'Name', 'Password']
 @mod.route('/')
 @mod.route('/list')
 def list():
+    check()
     messages = db.session.query(User).all()
     return render_template('admin/user/list.html', messages = messages)
 
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
+    check()
     if request.method == 'POST':
         user = db.session.query(User).filter_by(Name=request.form['Name']).first()
         if user == None:
@@ -28,6 +31,7 @@ def create():
 
 @mod.route('/delete', methods=['GET', 'POST'])
 def delete():
+    check()
     messages = db.session.query(User).all()
     if request.method == 'POST':
         id = request.form.getlist('ID')
@@ -45,5 +49,7 @@ def delete():
 
 @mod.route('/update', methods=['GET', 'POST'])
 def update():
+    check()
     message = {'usr_name' :  'test', 'usr_pwd' : '123', 'usr_group' : 'admin'}
     return render_template('admin/user/update.html', message = message)
+

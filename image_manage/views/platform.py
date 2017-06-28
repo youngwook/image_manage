@@ -2,17 +2,20 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, g
 from image_manage.databases.database import db
 from image_manage.databases.Amodels import Platform
+from image_manage.views.admin import check
 
 mod = Blueprint('platform', __name__, url_prefix='/admin/platform')
 
 @mod.route('/')
 @mod.route('/list')
 def list():
+    check()
     messages = db.session.query(Platform).all()
     return render_template('admin/platform/list.html', messages=messages)
 
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
+    check()
     if request.method == 'POST':
         platform = db.session.query(Platform).filter_by(Name=request.form['Name'], Version=request.form['Version']).first()
         if platform == None:
@@ -27,6 +30,8 @@ def create():
 
 @mod.route('/delete', methods=['GET', 'POST'])
 def delete():
+    check()
+
     messages = db.session.query(Platform).all()
     if request.method == 'POST':
         id = request.form.getlist('ID')

@@ -4,38 +4,48 @@ import pexpect
 if pf == 'win32':
     from pexpect.popen_spawn import PopenSpawn
 
-def sshConnect(account, ps, otp):
-#    ssh = pexpect.spawn('ssh p326jin@login01.plsi.or.kr')
-    if pf == 'win32':
-        ssh = PopenSpawn(('ssh %s' % account))
-    else:
-        ssh = pexpect.spawn(('ssh %s' % account))
-    PROMPT = ['#:','$:']
+class Connection:
 
-    try:
-        i = ssh.expect([ '[P|p]assword\(OTP\)\:', 'Are you sure you want to continue connecting \(yes\/no\)\?'], timeout=5)
+    def sshLogin(self, account, ps, otp):
+        self.ssh = None
 
-        if i == 0:
-            ssh.sendline(str(otp))
-            ssh.expect(['[P|p]assword\:'])
-            ssh.sendline(ps)
-            return ssh
+        try:
+            if pf == 'win32':
+                self.ssh = pexpect.popen_spawn.PopenSpawn(('ssh %s' % account))
+            else:
+                self.ssh = pexpect.spawn(('ssh %s' % account))
 
-        elif i == 1:
+            for n in range(3):
 
-            ssh.sendline('yes')
-            ssh.expect(['[P|p]assword\(OTP\)\:'])
-            ssh.sendline(str(otp))
-            ssh.expect(['[P|p]assword\:'])
-            ssh.sendline(ps)
-            return ssh
+                i = self.ssh.expect(['Are you sure you want to continue connecting \(yes\/no\)\?', '[P|p]assword\(OTP\)', '[P|p]assword\:'], timeout=5)
 
-    except pexpect.EOF:
-        print "EOF"
-        return None
+                if i == 0:
+                    self.ssh.sendline('yes')
 
-    except pexpect.TIMEOUT:
-        print "timeout"
-        return None
+                if i == 1:
+                    self.ssh.sendline(otp)
 
-    return None
+                if i == 2:
+                    self.ssh.sendline(ps)
+                    return self.ssh
+
+
+        except pexpect.EOF:
+            return self.ssh
+
+        except pexpect.TIMEOUT:
+            return self.ssh
+
+    def command(self, user):
+
+        try :
+            self.ssh.sendline("ls")
+            self.ssh.expect(('%s@' % user))
+
+        except pexpect.EOF:
+            return None
+
+        except pexpect.TIMEOUT:
+            return None
+
+        return self.ssh.before

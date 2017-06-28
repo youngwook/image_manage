@@ -10,10 +10,13 @@ mod = Blueprint('general', __name__, url_prefix='/general')
 
 @mod.route('/')
 def index():
+    check()
     return render_template('general/index.html')
 
 @mod.route('/list', methods=['GET', 'POST'])
 def list():
+    check()
+
     pf = db.session.query(Platform).all()
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
@@ -45,6 +48,7 @@ def list():
 
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
+    check()
 
     os = []
     messages = db.session.query(Os.Name.distinct().label('Name')).all()
@@ -121,6 +125,8 @@ def create():
 
 @mod.route('/delete', methods=['GET', 'POST'])
 def delete():
+    check()
+
     pf = db.session.query(Platform).all()
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
@@ -160,6 +166,8 @@ def delete():
 
 @mod.route('/upload', methods=['GET', 'POST'])
 def upload():
+    check()
+
     pf = db.session.query(Platform).all()
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
@@ -193,3 +201,14 @@ def upload():
             img = db.session.query(Img).filter_by(ID_id=i).first()
 
     return render_template('general/upload.html', messages=messages)
+
+def check():
+    if g.user:
+        user = db.session.query(User).filter_by(Name=g.user).first()
+
+        if user:
+            return redirect(url_for('admin.index'))
+        else:
+            pass
+    else:
+        return redirect(url_for('login.index'))

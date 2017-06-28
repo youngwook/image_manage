@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, session, redirect, url_for, reques
 from image_manage.databases.database import db
 from image_manage.databases.Amodels import  Img, Os, Library, Application, Platform, User
 import copy
+from image_manage.views.admin import check
 
 mod = Blueprint('image', __name__, url_prefix='/admin/image')
 item = ['os', 'library', 'application', 'platform']
@@ -12,6 +13,7 @@ item = ['os', 'library', 'application', 'platform']
 @mod.route('/')
 @mod.route('/list')
 def list():
+    check()
     pf = db.session.query(Platform).all()
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
@@ -43,7 +45,7 @@ def list():
 
 @mod.route('/create', methods=['GET', 'POST'])
 def create():
-
+    check()
     os = []
     messages = db.session.query(Os.Name.distinct().label('Name')).all()
     for m in messages:
@@ -119,6 +121,7 @@ def create():
 
 @mod.route('/delete', methods=['GET', 'POST'])
 def delete():
+    check()
     pf = db.session.query(Platform).all()
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
@@ -157,6 +160,7 @@ def delete():
 
 @mod.route('/uplaod', methods=['GET', 'POST'])
 def upload():
+    check()
     pf = db.session.query(Platform).all()
     lib = db.session.query(Library).all()
     app = db.session.query(Application).all()
@@ -191,3 +195,4 @@ def upload():
 
             return redirect(url_for('image.list'))
     return render_template('admin/image/upload.html', messages=messages)
+

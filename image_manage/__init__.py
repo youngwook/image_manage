@@ -13,7 +13,7 @@ if pf == "linux" or pf == "linux2":
 elif pf == "win32":
     app.config.from_object('config_for_windows')
 
-app.permanent_session_lifetime = timedelta(seconds=60)
+app.permanent_session_lifetime = timedelta(seconds=60*10)
 from image_manage.databases.database import db
 
 @app.before_request
@@ -22,6 +22,10 @@ def before_request():
     g.user = None
     if 'user' in session:
         g.user = session['user']
+
+    g.ssh = None
+    if sshConnector.has_key(g.user):
+        g.ssh = sshConnector.get(g.user)
 
 @app.teardown_request
 def teardown_request(exception):
